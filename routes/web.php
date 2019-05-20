@@ -15,8 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin_template');
+Route::get('stocks', function()
+{
+    return View::make('pages.stocks.index');
+});
+Route::get('suppliers', function()
+{
+    return View::make('suppliers.index');
+});
+Route::get('admin', function()
+{
+    return View::make('admin.index');
 });
 
 Auth::routes();
