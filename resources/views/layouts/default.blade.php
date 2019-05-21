@@ -38,9 +38,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#pageSuppliers" data-toggle="collapse" aria-expanded="false">Admin</a>
-                        <ul class="collapse list-unstyled" id="pageSuppliers">
-                            <li><a href="#">Category</a></li>
+                        <a href="#admin" data-toggle="collapse" aria-expanded="false">Admin</a>
+                        <ul class="collapse list-unstyled" id="admin">
+                            <li><a href="/categories">Category</a></li>
                             <li><a href="#">Brand</a></li>
                             <li><a href="#">Generic</a></li>
                         </ul>
@@ -96,12 +96,8 @@
                     </div>
                 </nav>
 
-                <div class="line"></div>
-
-                <h2>Lorem Ipsum Dolor</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
                 @yield('content')
+
             </div>
         </div>
 

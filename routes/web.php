@@ -23,10 +23,11 @@ Route::get('suppliers', function()
 {
     return View::make('suppliers.index');
 });
-Route::get('admin', function()
-{
-    return View::make('admin.index');
-});
+
+Route::get("/categories", ["uses" => "CategoriesController@categories", "as" => "category"]);
+Route::post("/category_add", ["uses" => "CategoriesController@addCategory", "as" => "category.add"]);
+Route::post("/category_update", ["uses" => "CategoriesController@updateCategory", "as" => "category.update"]);
+Route::post("/category_delete", ["uses" => "CategoriesController@deleteCategory", "as" => "category.delete"]);
 
 Auth::routes();
 
