@@ -26,7 +26,7 @@ class CategoriesController extends Controller
     {
       $Categories = new Categories;
       $categoryList = $Categories->getCategories();
-      return view('pages.admin.category',compact('categoryList','users'));
+      return view('pages.admin.category',compact('categoryList'));
     }
 
     public function addCategory(Request $request)
@@ -36,8 +36,8 @@ class CategoriesController extends Controller
           'name' => 'required|unique:categories',
         ]);
 
-        $category_name = $request->all();
-        $category_details['name'] = $category_name['name'];
+        $category_form = $request->all();
+        $category_details['name'] = $category_form['name'];
         $category_details['status'] = 1;
 
         $Categories = new Categories;

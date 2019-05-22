@@ -41,8 +41,8 @@
                         <a href="#admin" data-toggle="collapse" aria-expanded="false">Admin</a>
                         <ul class="collapse list-unstyled" id="admin">
                             <li><a href="/categories">Category</a></li>
-                            <li><a href="#">Brand</a></li>
-                            <li><a href="#">Generic</a></li>
+                            <li><a href="/brands">Brand</a></li>
+                            <li><a href="/generics">Generic</a></li>
                         </ul>
                     </li>
                     <li>
