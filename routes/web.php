@@ -39,6 +39,11 @@ Route::post("/generic_add", ["uses" => "GenericsController@addGeneric", "as" => 
 Route::post("/generic_update", ["uses" => "GenericsController@updateGeneric", "as" => "generic.update"]);
 Route::post("/generic_delete", ["uses" => "GenericsController@deleteGeneric", "as" => "generic.delete"]);
 
+Route::get("/suppliers", ["uses" => "SuppliersController@suppliers", "as" => "suppliers"]);
+Route::post("/supplier_add", ["uses" => "SuppliersController@addSupplier", "as" => "supplier.add"]);
+Route::post("/supplier_update", ["uses" => "SuppliersController@updateSupplier", "as" => "supplier.update"]);
+Route::post("/supplier_delete", ["uses" => "SuppliersController@deleteSupplier", "as" => "supplier.delete"]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

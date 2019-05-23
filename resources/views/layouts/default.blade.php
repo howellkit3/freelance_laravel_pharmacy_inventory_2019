@@ -23,7 +23,7 @@
 
                 <ul class="list-unstyled components">
                     <li class="active">
-                        <a href="#">Home</a>
+                        <a href="/home">Home</a>
                     </li>
                     <li>
                         <a href="#pageStocks" data-toggle="collapse" aria-expanded="false">Stocks</a>
@@ -34,7 +34,7 @@
                     <li>
                         <a href="#pageSuppliers" data-toggle="collapse" aria-expanded="false">Suppliers</a>
                         <ul class="collapse list-unstyled" id="pageSuppliers">
-                            <li><a href="#">List</a></li>
+                            <li><a href="/suppliers">List</a></li>
                         </ul>
                     </li>
                     <li>
