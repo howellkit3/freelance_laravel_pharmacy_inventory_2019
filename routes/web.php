@@ -44,6 +44,11 @@ Route::post("/supplier_add", ["uses" => "SuppliersController@addSupplier", "as" 
 Route::post("/supplier_update", ["uses" => "SuppliersController@updateSupplier", "as" => "supplier.update"]);
 Route::post("/supplier_delete", ["uses" => "SuppliersController@deleteSupplier", "as" => "supplier.delete"]);
 
+Route::get("/stocks", ["uses" => "StocksController@stocks", "as" => "stocks"]);
+Route::post("/stock_add", ["uses" => "StocksController@addStock", "as" => "stock.add"]);
+Route::post("/stock_update", ["uses" => "StocksController@updateStock", "as" => "stock.update"]);
+Route::post("/stock_delete", ["uses" => "StocksController@deleteStock", "as" => "stock.delete"]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

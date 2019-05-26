@@ -41,9 +41,7 @@ class CategoriesController extends Controller
         $category_details['status'] = 1;
 
         $Categories = new Categories;
-        $Categories->addCategory($category_details);
-
-        //flash('Category has been Added!')->success()->important();
+        $Categories->addCategory($category_details)->with('success','Categories has been added successfully!');
       }
 
       return redirect()->route('category');
@@ -61,7 +59,7 @@ class CategoriesController extends Controller
         $Categories = new Categories;
         $Categories->updateCategory($category_details);
       }
-      return redirect()->route('category');
+      return redirect()->route('category')->with('success','Categories has been updated successfully!');
     }
 
     public function deleteCategory(Request $request)
@@ -74,6 +72,6 @@ class CategoriesController extends Controller
         $Categories = new Categories;
         $Categories->deleteCategory($category_details);
       }
-      return redirect()->route('category');
+      return redirect()->route('category')->with('success','Categories has been deleted successfully!');
     }
 }

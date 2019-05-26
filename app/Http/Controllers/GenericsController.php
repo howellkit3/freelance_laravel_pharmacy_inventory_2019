@@ -41,9 +41,7 @@ class GenericsController extends Controller
         $generic_details['status'] = 1;
 
         $Generics = new Generics;
-        $Generics->addGeneric($generic_details);
-
-        //flash('Category has been Added!')->success()->important();
+        $Generics->addGeneric($generic_details)->with('success','Generic has been added successfully!');
       }
 
       return redirect()->route('generic');
@@ -60,7 +58,7 @@ class GenericsController extends Controller
         $Generics = new Generics;
         $Generics->updateGeneric($generic_details);
       }
-      return redirect()->route('generic');
+      return redirect()->route('generic')->with('success','Generic has been updated successfully!');
     }
 
     public function deleteGeneric(Request $request)
@@ -73,6 +71,6 @@ class GenericsController extends Controller
         $Generics = new Generics;
         $Generics->deleteGeneric($generic_details);
       }
-      return redirect()->route('generic');
+      return redirect()->route('generic')->with('success','Generic has been deleted successfully!');
     }
 }

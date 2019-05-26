@@ -41,9 +41,7 @@ class BrandsController extends Controller
         $brand_details['status'] = 1;
 
         $Brands = new Brands;
-        $Brands->addBrand($brand_details);
-
-        //flash('Category has been Added!')->success()->important();
+        $Brands->addBrand($brand_details)->with('success','Brands has been added successfully!');
       }
 
       return redirect()->route('brand');
@@ -61,7 +59,7 @@ class BrandsController extends Controller
         $Brands = new Brands;
         $Brands->updateBrand($brand_details);
       }
-      return redirect()->route('brand');
+      return redirect()->route('brand')->with('success','Brands has been updated successfully!');
     }
 
     public function deleteBrand(Request $request)
@@ -74,6 +72,6 @@ class BrandsController extends Controller
         $Brands = new Brands;
         $Brands->deleteBrand($brand_details);
       }
-      return redirect()->route('brand');
+      return redirect()->route('brand')->with('success','Brands has been deleted successfully!');
     }
 }

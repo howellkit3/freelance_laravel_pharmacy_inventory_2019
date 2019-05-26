@@ -40,9 +40,7 @@ class SuppliersController extends Controller
         $supplier_details['name'] = $supplier_form['name'];
         $supplier_details['status'] = 1;
         $Suppliers = new Suppliers;
-        $Suppliers->addSupplier($supplier_details);
-
-        //flash('Category has been Added!')->success()->important();
+        $Suppliers->addSupplier($supplier_details)->with('success','Supplier has been added successfully!');
       }
 
       return redirect()->route('suppliers');
@@ -57,7 +55,7 @@ class SuppliersController extends Controller
         $Suppliers = new Suppliers;
         $Suppliers->updateSupplier($supplier_details);
       }
-      return redirect()->route('suppliers');
+      return redirect()->route('suppliers')->with('success','Supplier has been updated successfully!');
     }
 
     public function deleteSupplier(Request $request)
@@ -70,6 +68,6 @@ class SuppliersController extends Controller
         $Suppliers = new Suppliers;
         $Suppliers->deleteSupplier($supplier_details);
       }
-      return redirect()->route('suppliers');
+      return redirect()->route('suppliers')->with('success','Supplier has been deleted successfully!');
     }
 }

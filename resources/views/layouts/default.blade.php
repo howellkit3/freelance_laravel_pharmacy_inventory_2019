@@ -28,7 +28,7 @@
                     <li>
                         <a href="#pageStocks" data-toggle="collapse" aria-expanded="false">Stocks</a>
                         <ul class="collapse list-unstyled" id="pageStocks">
-                            <li><a href="#">List</a></li>
+                            <li><a href="/stocks">List</a></li>
                         </ul>
                     </li>
                     <li>
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </nav>
-
+                @include('flash-message')
                 @yield('content')
 
             </div>
