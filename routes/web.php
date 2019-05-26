@@ -49,6 +49,11 @@ Route::post("/stock_add", ["uses" => "StocksController@addStock", "as" => "stock
 Route::post("/stock_update", ["uses" => "StocksController@updateStock", "as" => "stock.update"]);
 Route::post("/stock_delete", ["uses" => "StocksController@deleteStock", "as" => "stock.delete"]);
 
+Route::get("/daily_sales", ["uses" => "DailySalesController@showStockQuantities", "as" => "daily_sales"]);
+Route::post("/daily_sales_add", ["uses" => "DailySalesController@addDailyStockSale", "as" => "daily_sales.add"]);
+Route::post("/daily_sales_update", ["uses" => "DailySalesController@updateDailyStockSale", "as" => "daily_sales.update"]);
+Route::post("/daily_sales_delete", ["uses" => "DailySalesController@deleteDailyStockSale", "as" => "daily_sales.delete"]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

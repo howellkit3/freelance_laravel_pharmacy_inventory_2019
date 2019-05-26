@@ -1,1 +1,1 @@
-<div id="copyright text-right">© Copyright 2013 Scotchy Scotch Scotch</div>
+<div id="copyright text-right">2019, @hellow_kit projects</div>

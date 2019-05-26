@@ -46,7 +46,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Daily Sales</a>
+                        <a href="/daily_sales">Daily Sales</a>
                     </li>
                 </ul>
             </nav>
