@@ -41,10 +41,10 @@ class CategoriesController extends Controller
         $category_details['status'] = 1;
 
         $Categories = new Categories;
-        $Categories->addCategory($category_details)->with('success','Categories has been added successfully!');
+        $Categories->addCategory($category_details);
       }
 
-      return redirect()->route('category');
+      return redirect()->route('category')->with('success','Categories has been added successfully!');
     }
 
     public function updateCategory(Request $request)

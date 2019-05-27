@@ -41,10 +41,10 @@ class BrandsController extends Controller
         $brand_details['status'] = 1;
 
         $Brands = new Brands;
-        $Brands->addBrand($brand_details)->with('success','Brands has been added successfully!');
+        $Brands->addBrand($brand_details);
       }
 
-      return redirect()->route('brand');
+      return redirect()->route('brand')->with('success','Brands has been added successfully!');
     }
 
     public function updateBrand(Request $request)

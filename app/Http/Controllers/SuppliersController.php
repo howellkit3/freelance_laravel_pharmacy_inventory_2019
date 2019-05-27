@@ -40,10 +40,10 @@ class SuppliersController extends Controller
         $supplier_details['name'] = $supplier_form['name'];
         $supplier_details['status'] = 1;
         $Suppliers = new Suppliers;
-        $Suppliers->addSupplier($supplier_details)->with('success','Supplier has been added successfully!');
+        $Suppliers->addSupplier($supplier_details);
       }
 
-      return redirect()->route('suppliers');
+      return redirect()->route('suppliers')->with('success','Supplier has been added successfully!');
     }
 
     public function updateSupplier(Request $request)
