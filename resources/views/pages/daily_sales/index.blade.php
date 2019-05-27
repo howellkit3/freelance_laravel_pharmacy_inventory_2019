@@ -10,17 +10,17 @@
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <form method="POST" action="{{ route('supplier.add') }} " id ="addSupplier">
+              <form method="POST" action="{{ route('stock.addSale') }} " id ="addSale">
                 {{ csrf_field() }}
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="addChargeModal">Add Stock Sale</h4>
+                  <h4 class="modal-title" id="addChargeModal">Add Sale</h4>
                 </div>
                 <div class="modal-body">
-                  <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                  <div class="form-group{{ $errors->has('stock_id') ? ' has-error' : '' }}">
                       <label class="col-sm-3 control-label"> Stock Num</label>
                       <div class="col-sm-9">
-                        <select class="form-control" name="brand_id" required>
+                        <select class="form-control" name="stock_id" required>
                           <option disabled>Select Stock Num</option>
                           @foreach ($stockList as $key => $stock)
                              <option value="{{$stock->id}}">
@@ -29,16 +29,22 @@
                         </select>
                       </div>
                   </div><br><br>
-                  <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                  <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
                       <label class="col-sm-3 control-label"> Quantity</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" name="quantity" placeholder="Quantity" required>
+                        <input type="number" class="form-control" name="quantity" placeholder="Quantity" required>
+                      </div>
+                  </div><br><br>
+                  <div class="form-group{{ $errors->has('date_sold') ? ' has-error' : '' }}">
+                      <label class="col-sm-3 control-label"> Date Sold</label>
+                      <div class="col-sm-9">
+                        <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
                       </div>
                   </div><br>
                 </div>
                 <div class="modal-footer">
                   <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="submit" form="addSupplier" class="btn btn-info">Create</button>
+                  <button type="submit" form="addSale" class="btn btn-info" onclick="return confirm('Are you sure about your input?');">Create</button>
                 </div>
               </form>
             </div>
@@ -46,7 +52,7 @@
         </div>
         <!-- End Modal for Create -->
      </div>
-     <h3>Stock by Quantity Table</h3>
+     <h3> Logs of Stocks</h3>
      <br>
      <table class="table table-bordered responsive" id="table-2">
         <thead>
@@ -56,9 +62,8 @@
               <th>Stock Brand</th>
               <th>Stock Category</th>
               <th>Size</th>
-              <th>Quantity</th>
+              <th>Type</th>
               <th>Created</th>
-              <th>Actions</th>
            </tr>
         </thead>
         <tbody>
@@ -69,16 +74,8 @@
                <td>{{ ucfirst($brandList[$dailySales->brand_id]) }}</td>
                <td>{{ ucfirst($categoryList[$dailySales->category_id]) }}</td>
                <td>{{ $dailySales->quantity }}</td>
-               <td>{{ ($dailySales->type) == 1 ? 'Active' : 'Inactive' }}</td>
+               <td>{{ ($dailySales->type) == 1 ? 'Additions' : 'Deductions' }}</td>
                <td>{{ $dailySales->created_at }}</td>
-               <td>
-                 <a href="#" data-toggle="modal" data-target="#update_daily_sales{{$dailySales->id}}">
-                    <button type="button" class="btn btn-info btn-xs">Edit</button>
-                </a>
-                <a href="#" data-toggle="modal" data-target="#update_daily_sales{{$dailySales->id}}">
-                   <button type="button" class="btn btn-danger btn-xs">Delete</button>
-               </a>
-               </td>
             </tr>
           <?php } ?>
         </tbody>

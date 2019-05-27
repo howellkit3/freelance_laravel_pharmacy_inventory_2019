@@ -17,7 +17,7 @@ class CreateStockQuantitiesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('stock_id');
             $table->integer('quantity');
-            $table->dateTime('date_sold');
+            $table->dateTime('date_sold')->nullable();
             $table->smallInteger('type')->default(1);
             $table->timestamps();
         });

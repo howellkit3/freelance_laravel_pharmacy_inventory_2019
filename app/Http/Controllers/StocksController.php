@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Models\Stocks;
 use App\Http\Models\StockInfos;
+use App\Http\Models\StockQuantities;
 
 class StocksController extends Controller
 {
@@ -18,11 +19,6 @@ class StocksController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function stocks()
     {
       $Stocks = new Stocks;
@@ -31,6 +27,9 @@ class StocksController extends Controller
       $brandList = $Stocks->getBrandList();
       $categoryList = $Stocks->getCategoryList();
       $genericList = $Stocks->getGenericList();
+
+      $StockQuantities = new StockQuantities;
+      $stockList = $StockQuantities->insertStockQuantity($stockList);
 
       return view('pages.stocks.index',compact('stockList', 'supplierList', 'brandList', 'categoryList', 'genericList'));
     }

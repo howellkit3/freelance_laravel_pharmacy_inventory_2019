@@ -10,7 +10,7 @@ class StockQuantities extends Model
 	use Notifiable;
 
     protected $fillable = [
-         'id', 'stock_id','quantity','type','created_by', 'updated_by'
+         'id', 'stock_id','quantity','type','date_sold','created_by', 'updated_by'
     ];
 
     protected $hidden = [
@@ -27,20 +27,30 @@ class StockQuantities extends Model
       return $StockQuantityDetails;
     }
 
-		public function addGeneric($stock_quantity_details) {
+		public function addQuantityToStock($stock_quantity_details)
+		{
 			$stock_quantity = SELF::create($stock_quantity_details);
 			return $stock_quantity->id;
 		}
 
-		public function updateGeneric($stock_quantity_details)
+		public function insertStockQuantity($stocks)
 		{
-			SELF::where('id','=', $stock_quantity_details['id'])->update(array('name' => $stock_quantity_details['name']));
-			return 1;
-		}
+			foreach ($stocks as $key => $value) {
+				$adds = DB::table('stock_quantities')
+						->where('stock_id', $value->id)
+						->where('type', 1)
+						->sum('quantity');
 
-		public function deleteGeneric($stock_quantity_details)
-		{
-			SELF::where('id','=', $stock_quantity_details['id'])->update(array('status' => $stock_quantity_details['status']));
-			return 1;
+				$subtracts = DB::table('stock_quantities')
+						->where('stock_id', $value->id)
+						->where('type', 0)
+						->sum('quantity');
+
+				$available = $adds - $subtracts;
+
+				$stocks[$key]['available'] = $available;
+			}
+
+			return $stocks;
 		}
 }
