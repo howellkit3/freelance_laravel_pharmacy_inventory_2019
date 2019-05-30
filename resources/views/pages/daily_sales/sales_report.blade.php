@@ -22,7 +22,7 @@
               <th>Unit Price</th>
               <th>Selling Price</th>
               <th>Profit</th>
-              <th>Substract</th>
+              <th>Profit</th>
               <th>Balance Available</th>
            </tr>
         </thead>
@@ -35,10 +35,10 @@
                <td>{{ ucfirst($brandList[$dailySales->brand_id]) }}</td>
                <td>{{ ucfirst($genericList[$dailySales->category_id]) }}</td>
                <td>{{ $dailySales->size }}</td>
-               <td></td>
+               <td>{{ $dailySales->quantity }}</td>
                <td>{{ $dailySales->unit_price }}</td>
                <td>{{ $dailySales->selling_price }}</td>
-               <td></td>
+               <td>{{ $dailySales->profit }}</td>
                <th>{{ $dailySales->substractions }}</th>
                <td>{{ $dailySales->available_stock }}</td>
             </tr>

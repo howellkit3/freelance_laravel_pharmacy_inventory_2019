@@ -33,7 +33,7 @@ class StockQuantities extends Model
 													->select('stocks.*','stock_quantities.*','stock_quantities.id as stock_quantities_id', 'stocks.id as stocks_id', 'stock_infos.*')
 													->leftjoin('stocks', 'stocks.id', '=', 'stock_quantities.stock_id')
 													->leftjoin('stock_infos', 'stock_infos.stock_id', '=', 'stocks.id')
-											//		->where('type', 0)
+													->where('type', 0)
 													->paginate(50);
 
 			return $StockQuantityDetails;
@@ -69,13 +69,15 @@ class StockQuantities extends Model
 
 		public static function computeProfit($stocks)
 		{
+
 			foreach ($stocks as $key => $value) {
 				$unit_price = $value->unit_price;
 				$selling_price = $value->selling_price;
-				$quantity_sold = $value->quantity_sold;
+				$quantity_sold = $value->quantity;
 				$profit = ($selling_price * $quantity_sold) - ($unit_price * $quantity_sold);
 				$stocks[$key]->profit = $profit;
 			}
+		//	print_r('<pre>'); print_r($stocks);  print_r('</pre>');  exit; 
 			return $stocks;
 		}
 
