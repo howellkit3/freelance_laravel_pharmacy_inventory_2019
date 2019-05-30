@@ -34,7 +34,7 @@ class StockQuantitiesController extends Controller
         $StockQuantities = new StockQuantities;
         $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
 
-        return redirect()->route('daily_sales')->with('success','Stock Quantity has been updated successfully!');
+        return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
       }
 
       return view('pages.daily_sales.index',compact('dailySalesList', 'brandList', 'categoryList','stockList'));
@@ -53,10 +53,16 @@ class StockQuantitiesController extends Controller
         $StockQuantities = new StockQuantities;
         $currentQuantity = $StockQuantities->checkStockAndDateSold($stock_quantity_form);
 
+        $isValid = $StockQuantities->checkAvailStockQuantity($currentQuantity, $stock_quantity_form['quantity']);
+
+        if(!$isValid) {
+          return redirect()->route('stocks')->with('error','Check Item Quantity');
+        }
+
         if ($currentQuantity) {
           $stock_quantity_details['quantity'] = $currentQuantity->quantity + $stock_quantity_form['quantity'];
           $dailySalesList = $StockQuantities->updateQuantityToStock($stock_quantity_details, $currentQuantity->id);
-          return redirect()->route('daily_sales')->with('success','Stock Quantity has been updated successfully!');
+          return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
         } else {
           $stock_quantity_details['stock_id'] = $stock_quantity_form['stock_id'];
           $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
@@ -67,9 +73,9 @@ class StockQuantitiesController extends Controller
 
           if(!empty($hasQuantity)) {
             $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
-            return redirect()->route('daily_sales')->with('success','Stock Quantity has been updated successfully!');
+            return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
           }else{
-            return redirect()->route('daily_sales')->with('error','There is no Stock for the Item');
+            return redirect()->route('stocks')->with('error','There is no Stock for the Item');
           }
         }
       }

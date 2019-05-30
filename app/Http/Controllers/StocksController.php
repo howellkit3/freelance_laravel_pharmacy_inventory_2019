@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Models\Stocks;
 use App\Http\Models\StockInfos;
 use App\Http\Models\StockQuantities;
+use App\Http\Models\Brands;
+use App\Http\Models\Generics;
+use App\Http\Models\Categories;
+use App\Http\Models\Suppliers;
 
 class StocksController extends Controller
 {
@@ -23,15 +27,27 @@ class StocksController extends Controller
     {
       $Stocks = new Stocks;
       $stockList = $Stocks->getStocks();
-      $supplierList = $Stocks->getSupplierList();
-      $brandList = $Stocks->getBrandList();
-      $categoryList = $Stocks->getCategoryList();
-      $genericList = $Stocks->getGenericList();
+      $suppliers = $Stocks->getSupplierList();
+      $brands = $Stocks->getBrandList();
+      $categories = $Stocks->getCategoryList();
+      $generics = $Stocks->getGenericList();
 
       $StockQuantities = new StockQuantities;
       $stockList = $StockQuantities->insertStockQuantity($stockList);
 
-      return view('pages.stocks.index',compact('stockList', 'supplierList', 'brandList', 'categoryList', 'genericList'));
+      $Brands = new Brands;
+      $brandList = $Brands->getBrands();
+
+      $Generics = new Generics;
+      $genericList = $Generics->getGenerics();
+
+      $Categories = new Categories;
+      $categoryList = $Categories->getCategories();
+
+      $Suppliers = new Suppliers;
+      $supplierList = $Suppliers->getSuppliers();
+
+      return view('pages.stocks.index',compact('stockList','stockList_raw', 'supplierList', 'suppliers', 'brandList', 'categoryList', 'categories','genericList', 'brands', 'generics'));
     }
 
     public function addStock(Request $request)

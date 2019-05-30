@@ -44,7 +44,7 @@ class BrandsController extends Controller
         $Brands->addBrand($brand_details);
       }
 
-      return redirect()->route('brand')->with('success','Brands has been added successfully!');
+      return redirect()->route('stocks')->with('success','Brands has been added successfully!');
     }
 
     public function updateBrand(Request $request)
@@ -59,7 +59,7 @@ class BrandsController extends Controller
         $Brands = new Brands;
         $Brands->updateBrand($brand_details);
       }
-      return redirect()->route('brand')->with('success','Brands has been updated successfully!');
+      return redirect()->route('stocks')->with('success','Brands has been updated successfully!');
     }
 
     public function deleteBrand(Request $request)
@@ -72,6 +72,6 @@ class BrandsController extends Controller
         $Brands = new Brands;
         $Brands->deleteBrand($brand_details);
       }
-      return redirect()->route('brand')->with('success','Brands has been deleted successfully!');
+      return redirect()->route('stocks')->with('success','Brands has been deleted successfully!');
     }
 }

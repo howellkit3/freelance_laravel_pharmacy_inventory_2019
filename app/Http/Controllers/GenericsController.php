@@ -44,7 +44,7 @@ class GenericsController extends Controller
         $Generics->addGeneric($generic_details);
       }
 
-      return redirect()->route('generic')->with('success','Generic has been added successfully!');
+      return redirect()->route('stocks')->with('success','Generic has been added successfully!');
     }
 
     public function updateGeneric(Request $request)
@@ -58,7 +58,7 @@ class GenericsController extends Controller
         $Generics = new Generics;
         $Generics->updateGeneric($generic_details);
       }
-      return redirect()->route('generic')->with('success','Generic has been updated successfully!');
+      return redirect()->route('stocks')->with('success','Generic has been updated successfully!');
     }
 
     public function deleteGeneric(Request $request)
@@ -71,6 +71,6 @@ class GenericsController extends Controller
         $Generics = new Generics;
         $Generics->deleteGeneric($generic_details);
       }
-      return redirect()->route('generic')->with('success','Generic has been deleted successfully!');
+      return redirect()->route('stocks')->with('success','Generic has been deleted successfully!');
     }
 }

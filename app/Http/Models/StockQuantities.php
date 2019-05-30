@@ -77,7 +77,7 @@ class StockQuantities extends Model
 				$profit = ($selling_price * $quantity_sold) - ($unit_price * $quantity_sold);
 				$stocks[$key]->profit = $profit;
 			}
-		//	print_r('<pre>'); print_r($stocks);  print_r('</pre>');  exit; 
+
 			return $stocks;
 		}
 
@@ -90,6 +90,32 @@ class StockQuantities extends Model
 					->first();
 
 			return $isExist;
+		}
+
+		public static function checkAvailStockQuantity($current_quantity, $quantity)
+		{
+			if (!empty($current_quantity->stock_id)) {
+				$adds = DB::table('stock_quantities')
+						->where('stock_id', $current_quantity->stock_id)
+						->where('type', 1)
+						->sum('quantity');
+
+				$subtracts = DB::table('stock_quantities')
+						->where('stock_id', $current_quantity->stock_id)
+						->where('type', 0)
+						->sum('quantity');
+
+
+				$available = $adds - $subtracts;
+
+				if($available < $quantity) {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				return false;
+			}
 		}
 
 		public function updateQuantityToStock($quantity_form, $id)

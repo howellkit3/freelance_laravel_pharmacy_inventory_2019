@@ -22,35 +22,33 @@
                 </div>
 
                 <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="/home">Home</a>
-                    </li>
+                    <!-- <li class="active">
+                        <a href="{{ route('home') }}">Home</a>
+                    </li> -->
                     <li>
-                        <a href="#pageStocks" data-toggle="collapse" aria-expanded="false">Stocks</a>
-                        <ul class="collapse list-unstyled" id="pageStocks">
-                            <li><a href="/stocks">List</a></li>
-                        </ul>
+                      <li><a href="{{ route('stocks') }}">Stocks
+                      </a></li>
                     </li>
-                    <li>
-                        <a href="#pageSuppliers" data-toggle="collapse" aria-expanded="false">Suppliers</a>
-                        <ul class="collapse list-unstyled" id="pageSuppliers">
-                            <li><a href="/suppliers">List</a></li>
-                        </ul>
-                    </li>
-                    <li>
+                    <!-- <li>
                         <a href="#admin" data-toggle="collapse" aria-expanded="false">Admin</a>
                         <ul class="collapse list-unstyled" id="admin">
                             <li><a href="/categories">Category</a></li>
                             <li><a href="/brands">Brand</a></li>
                             <li><a href="/generics">Generic</a></li>
                         </ul>
+                    </li> -->
+                    <li>
+                        <a href="{{ route('daily_sales') }}">Sales Log</a>
                     </li>
                     <li>
-                        <a href="/daily_sales">Sales Log</a>
+                        <a href="{{ route('sales_report') }}">Daily Sales</a>
                     </li>
-                    <li>
-                        <a href="/sales_report">Daily Sales</a>
-                    </li>
+                    <!-- <li>
+                        <a href="#pageSuppliers" data-toggle="collapse" aria-expanded="false">Suppliers</a>
+                        <ul class="collapse list-unstyled" id="pageSuppliers">
+                            <li><a href="{{ route('suppliers') }}">List</a></li>
+                        </ul>
+                    </li> -->
                 </ul>
             </nav>
 

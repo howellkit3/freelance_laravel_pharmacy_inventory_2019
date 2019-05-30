@@ -3,7 +3,7 @@
   <div class="users-table">
      <div class="table-top-links pull-right">
         <a href="" class="btn btn-default btn-icon" data-toggle="modal" data-target="#myModal">
-        Add Stock Sale
+        Add Sale
         <i class="entypo-list-add"></i>
         </a>
         <!-- Modal for Create -->
