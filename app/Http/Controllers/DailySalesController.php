@@ -32,7 +32,6 @@ class DailySalesController extends Controller
       $categoryList = $Stocks->getCategoryList();
       $stockList = $Stocks->getStocks();
 
-      //print_r('<pre>');     print_r($dailySalesList); print_r('</pre>'); exit;
       return view('pages.daily_sales.index',compact('dailySalesList', 'brandList', 'categoryList','stockList'));
     }
 
@@ -57,30 +56,17 @@ class DailySalesController extends Controller
       return redirect()->route('daily_sales')->with('success','Stock has been updated!');
     }
 
-    public function updateDailyStockSale(Request $request)
+    public function showReportPage()
     {
-      if($request->has('_token')) {
+      $StockQuantities = new StockQuantities;
+      $Stocks = new Stocks;
+      $dailySalesList = $StockQuantities->getSoldDates();
+      $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
+    //  $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
+      $brandList = $Stocks->getBrandList();
+      $genericList = $Stocks->getGenericList();
 
-        $generic_form = $request->all();
-        $generic_details['name'] = $generic_form['name'];
-        $generic_details['id'] = $generic_form['id'];
-
-        $StockQuantities = new StockQuantities;
-        $StockQuantities->updateGeneric($generic_details);
-      }
-      return redirect()->route('generic')->with('success','Generic has been updated successfully!');
-    }
-
-    public function deleteDailyStockSale(Request $request)
-    {
-      if($request->has('_token')) {
-        $generic_form = $request->all();
-        $generic_details['id'] = $generic_form['id'];
-        $generic_details['status'] = 0;
-
-        $StockQuantities = new StockQuantities;
-        $StockQuantities->deleteGeneric($generic_details);
-      }
-      return redirect()->route('generic')->with('success','Generic has been deleted successfully!');
+    //  print_r('<pre>');print_r($dailySalesList);print_r('</pre>'); exit;
+      return view('pages.daily_sales.sales_report',compact('dailySalesList', 'brandList', 'genericList'));
     }
 }

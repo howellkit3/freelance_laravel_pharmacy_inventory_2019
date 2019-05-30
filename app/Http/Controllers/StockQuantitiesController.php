@@ -24,10 +24,12 @@ class StockQuantitiesController extends Controller
         $request->validate([
           'stocks_id' => 'required',
           'quantity' => 'required|integer|min:0',
+          'date_sold' => 'required',
         ]);
         $stock_quantity_form = $request->all();
         $stock_quantity_details['stock_id'] = $stock_quantity_form['stocks_id'];
         $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
+        $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
 
         $StockQuantities = new StockQuantities;
         $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
@@ -46,19 +48,31 @@ class StockQuantitiesController extends Controller
           'quantity' => 'required|integer|min:0',
           'date_sold' => 'required',
         ]);
+
         $stock_quantity_form = $request->all();
-        $stock_quantity_details['stock_id'] = $stock_quantity_form['stock_id'];
-        $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
-        $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
-        $stock_quantity_details['type'] = 0;
-
         $StockQuantities = new StockQuantities;
-        $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
+        $currentQuantity = $StockQuantities->checkStockAndDateSold($stock_quantity_form);
 
-        return redirect()->route('daily_sales')->with('success','Stock Quantity has been updated successfully!');
+        if ($currentQuantity) {
+          $stock_quantity_details['quantity'] = $currentQuantity->quantity + $stock_quantity_form['quantity'];
+          $dailySalesList = $StockQuantities->updateQuantityToStock($stock_quantity_details, $currentQuantity->id);
+          return redirect()->route('daily_sales')->with('success','Stock Quantity has been updated successfully!');
+        } else {
+          $stock_quantity_details['stock_id'] = $stock_quantity_form['stock_id'];
+          $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
+          $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
+          $stock_quantity_details['type'] = 0;
+
+          $hasQuantity = $StockQuantities->checkIfHasQuantity($stock_quantity_details['stock_id']);
+
+          if(!empty($hasQuantity)) {
+            $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
+            return redirect()->route('daily_sales')->with('success','Stock Quantity has been updated successfully!');
+          }else{
+            return redirect()->route('daily_sales')->with('error','There is no Stock for the Item');
+          }
+        }
       }
-
-      return view('pages.daily_sales.index',compact('dailySalesList', 'brandList', 'categoryList','stockList'));
     }
 
     public function insertStockQuantity($stockList)

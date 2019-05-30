@@ -46,7 +46,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/daily_sales">Daily Sales</a>
+                        <a href="/daily_sales">Sales Log</a>
+                    </li>
+                    <li>
+                        <a href="/sales_report">Daily Sales</a>
                     </li>
                 </ul>
             </nav>

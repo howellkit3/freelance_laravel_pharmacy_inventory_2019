@@ -52,7 +52,7 @@
         </div>
         <!-- End Modal for Create -->
      </div>
-     <h3> Logs of Stocks</h3>
+     <h3> Sales and Develiry Logs</h3>
      <br>
      <table class="table table-bordered responsive" id="table-2">
         <thead>
@@ -61,9 +61,9 @@
               <th>Stock #</th>
               <th>Stock Brand</th>
               <th>Stock Category</th>
-              <th>Size</th>
+              <th>Quantity</th>
               <th>Type</th>
-              <th>Created</th>
+              <th>Date Sold/Delivered</th>
            </tr>
         </thead>
         <tbody>
@@ -74,8 +74,8 @@
                <td>{{ ucfirst($brandList[$dailySales->brand_id]) }}</td>
                <td>{{ ucfirst($categoryList[$dailySales->category_id]) }}</td>
                <td>{{ $dailySales->quantity }}</td>
-               <td>{{ ($dailySales->type) == 1 ? 'Additions' : 'Deductions' }}</td>
-               <td>{{ $dailySales->created_at }}</td>
+               <td>{{ ($dailySales->type) == 1 ? 'Additions (+)' : 'Deductions (-)' }}</td>
+               <td>{{ date('Y-m-d', strtotime($dailySales->date_sold)) }}</td>
             </tr>
           <?php } ?>
         </tbody>

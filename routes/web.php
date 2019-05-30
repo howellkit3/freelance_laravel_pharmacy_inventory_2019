@@ -53,9 +53,11 @@ Route::post("/add_quantity", ["uses" => "StockQuantitiesController@addQuantity",
 Route::post("/add_sale", ["uses" => "StockQuantitiesController@addSale", "as" => "stock.addSale"]);
 
 Route::get("/daily_sales", ["uses" => "DailySalesController@showStockQuantities", "as" => "daily_sales"]);
-Route::post("/daily_sales_add", ["uses" => "DailySalesController@addDailyStockSale", "as" => "daily_sales.add"]);
+Route::post("/sales_report", ["uses" => "DailySalesController@addDailyStockSale", "as" => "sales_report"]);
 Route::post("/daily_sales_update", ["uses" => "DailySalesController@updateDailyStockSale", "as" => "daily_sales.update"]);
 Route::post("/daily_sales_delete", ["uses" => "DailySalesController@deleteDailyStockSale", "as" => "daily_sales.delete"]);
+
+Route::get("/sales_report", ["uses" => "DailySalesController@showReportPage", "as" => "sales_report"]);
 
 Auth::routes();
 

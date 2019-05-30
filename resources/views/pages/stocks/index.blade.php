@@ -116,7 +116,7 @@
               <th>Size</th>
               <th>Unit Price</th>
               <th>Selling Price</th>
-              <th>Available</th>
+              <th>Quantity</th>
               <th>Expiry Date</th>
               <th>Actions</th>
            </tr>
@@ -291,6 +291,12 @@
                           <label class="col-sm-3 control-label"> Quantity</label>
                           <div class="col-sm-9">
                             <input type="number" min="0" class="form-control"  name="quantity" placeholder="Quantity" required>
+                          </div>
+                      </div><br><br>
+                      <div class="form-group">
+                          <label class="col-sm-3 control-label"> Date Delivered</label>
+                          <div class="col-sm-9">
+                            <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
                           </div>
                       </div><br><br>
                     </div>
