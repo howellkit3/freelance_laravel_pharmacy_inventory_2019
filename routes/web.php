@@ -58,6 +58,8 @@ Route::post("/daily_sales_update", ["uses" => "DailySalesController@updateDailyS
 Route::post("/daily_sales_delete", ["uses" => "DailySalesController@deleteDailyStockSale", "as" => "daily_sales.delete"]);
 
 Route::get("/sales_report", ["uses" => "DailySalesController@showReportPage", "as" => "sales_report"]);
+Route::get("/stocks-excel", ["uses" => "ExcelController@exportStocks", "as" => "stocks-excel"]);
+Route::get("/daily-sales-excel", ["uses" => "ExcelController@exportDailySales", "as" => "daily-sales-excel"]);
 
 Auth::routes();
 

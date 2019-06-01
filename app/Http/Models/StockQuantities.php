@@ -67,6 +67,26 @@ class StockQuantities extends Model
 			return $stocks;
 		}
 
+		public function insertStockQuantityExcel($stocks)
+		{
+			foreach ($stocks as $key => $value) {
+				$adds = DB::table('stock_quantities')
+						->where('stock_id', $value->id)
+						->where('type', 1)
+						->sum('quantity');
+
+				$subtracts = DB::table('stock_quantities')
+						->where('stock_id', $value->id)
+						->where('type', 0)
+						->sum('quantity');
+
+				$available = $adds - $subtracts;
+				$stocks[$key]->available = $available;
+			}
+
+			return $stocks;
+		}
+
 		public static function computeProfit($stocks)
 		{
 

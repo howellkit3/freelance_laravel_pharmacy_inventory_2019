@@ -37,9 +37,9 @@
                             <li><a href="/generics">Generic</a></li>
                         </ul>
                     </li> -->
-                    <li>
+                    <!-- <li>
                         <a href="{{ route('daily_sales') }}">Sales Log</a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="{{ route('sales_report') }}">Daily Sales</a>
                     </li>

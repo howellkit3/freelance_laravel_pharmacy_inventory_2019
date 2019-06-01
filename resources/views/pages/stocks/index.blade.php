@@ -13,6 +13,11 @@
           Add Sale
           <i class="entypo-list-add"></i>
           </a>
+
+          <a href="{{route('daily-sales-excel')}}" class="btn btn-default btn-icon">
+            Export Stock Table
+          <i class="entypo-list-add"></i>
+          </a>
           <!-- Modal for Create -->
           <div class="modal fade" id="addStockSale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">

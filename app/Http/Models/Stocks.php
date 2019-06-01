@@ -75,4 +75,33 @@ class Stocks extends Model
 			SELF::where('id','=', $stock_details['id'])->update($stock_details);
 			return 1;
 		}
+
+		public function collection()
+		{
+				return SELF::all();
+		}
+
+		public static function getStocksExport(){
+			$StockDetails = SELF::orderBy('stocks.id', 'desc')
+					->where('stocks.status' , 1)
+					->select('stocks.id',
+									'stocks.stock_num',
+									'brands.name as brand_name',
+									'categories.name as category_name',
+									'generics.name as generic_name',
+									'suppliers.name as supplier_name',
+									'stocks.size',
+									'stock_infos.unit_price',
+									'stock_infos.selling_price',
+									'stock_infos.expiry_date'
+									)
+					->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
+					->leftjoin('brands', 'brands.id', '=', 'stocks.brand_id')
+					->leftjoin('categories', 'categories.id', '=', 'stocks.category_id')
+					->leftjoin('generics', 'generics.id', '=', 'stocks.generic_id')
+					->leftjoin('suppliers', 'suppliers.id', '=', 'stocks.supplier_id')
+					->get();
+
+			return $StockDetails;
+		}
 }
