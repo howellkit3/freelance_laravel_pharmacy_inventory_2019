@@ -115,7 +115,6 @@ class StockQuantities extends Model
 
 		public static function checkAvailStockQuantity($current_quantity, $quantity)
 		{
-
 			if (!empty($current_quantity->stock_id)) {
 				$adds = DB::table('stock_quantities')
 						->where('stock_id', $current_quantity->stock_id)

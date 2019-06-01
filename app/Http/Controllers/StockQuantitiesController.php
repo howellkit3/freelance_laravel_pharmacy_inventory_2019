@@ -56,7 +56,7 @@ class StockQuantitiesController extends Controller
 
         $isValid = $StockQuantities->checkAvailStockQuantity($currentQuantity, $stock_quantity_form['quantity']);
 
-        if(!$isValid) {
+        if(!$isValid && !empty($currentQuantity)) {
           return redirect()->route('stocks')->with('error','Check Item Quantity');
         }
 

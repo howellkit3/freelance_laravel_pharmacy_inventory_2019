@@ -7,7 +7,7 @@
         <i class="entypo-list-add"></i>
         </a>
 
-        <a href="{{route('daily-sales-excel')}}" class="btn btn-default btn-icon">
+        <a href="{{route('daily-sales-excel')}}" target="_blank" class="btn btn-default btn-icon">
           Print Daily Sales
         <i class="entypo-list-add"></i>
         </a>
