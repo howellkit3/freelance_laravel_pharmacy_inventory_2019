@@ -43,6 +43,7 @@ class StockQuantitiesController extends Controller
     public function addSale(Request $request)
     {
       if($request->has('_token')) {
+        $stock_quantity_form = $request->all();
         $request->validate([
           'stock_id' => 'required',
           'quantity' => 'required|integer|min:0',
