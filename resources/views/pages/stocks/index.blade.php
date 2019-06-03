@@ -139,7 +139,7 @@
                     <div class="form-group{{ $errors->has('unit_price') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label"> Unit Price</label>
                         <div class="col-sm-9">
-                          <input type="number" min="0" step="0.25" value="0.00" name="unit_price" required class="form-control" >
+                          <input type="number" min="0" value="0.00" name="unit_price" required class="form-control" >
                         </div>
                     </div><br><br>
                     <div class="form-group{{ $errors->has('selling_price') ? ' has-error' : '' }}">
