@@ -195,7 +195,17 @@
                 @else
                   <td><b>{{ $stock->available }}</b></td>
                 @endif
-                 <td>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
+                <?php
+                  $todayDate = time();
+                  $date_6_months = strtotime("+6 months");
+                  $givenDate = strtotime($stock->expiry_date);
+                ?>
+                @if($givenDate > $todayDate && $givenDate < $date_6_months)
+                  <td style="color:green">{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
+                @else
+                  <td>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
+                @endif
+
                  <td>
                    <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
                       <button type="button" class="btn btn-info btn-xs">Edit</button>
