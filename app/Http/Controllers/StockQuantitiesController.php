@@ -62,6 +62,7 @@ class StockQuantitiesController extends Controller
 
         if ($currentQuantity) {
           $stock_quantity_details['quantity'] = $currentQuantity->quantity + $stock_quantity_form['quantity'];
+          $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
           $dailySalesList = $StockQuantities->updateQuantityToStock($stock_quantity_details, $currentQuantity->id);
           return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
         } else {

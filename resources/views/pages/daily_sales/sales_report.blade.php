@@ -2,11 +2,6 @@
 @section('content')
   <div class="users-table">
      <div class="table-top-links pull-right">
-        <a href="" class="btn btn-default btn-icon" data-toggle="modal" data-target="#myModal">
-          Daily Sales
-        <i class="entypo-list-add"></i>
-        </a>
-
         <a href="{{route('daily-sales-excel')}}" target="_blank" class="btn btn-default btn-icon">
           Print Daily Sales
         <i class="entypo-list-add"></i>

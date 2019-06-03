@@ -105,7 +105,7 @@ class StockQuantities extends Model
 		{
 	//		print_r('<pre>'); print_r($sale_form['date_sold']); print_r('</pre>'); exit;
 			$isExist = DB::table('stock_quantities')
-			//		->where('date_sold', $sale_form['date_sold'])
+					->where('date_sold', $sale_form['date_sold'])
 					->where('stock_id',  $sale_form['stock_id'])
 					->where('type',  0)
 					->first();
@@ -141,9 +141,10 @@ class StockQuantities extends Model
 
 		public function updateQuantityToStock($quantity_form, $id)
 		{
+
 			SELF::where('id',  $id)
 						->where('type',  0)
-						->update(array('quantity' => $quantity_form['quantity']));
+						->update($quantity_form);
 			return 1;
 		}
 
