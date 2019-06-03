@@ -47,7 +47,7 @@ class StocksController extends Controller
       $Suppliers = new Suppliers;
       $supplierList = $Suppliers->getSuppliers();
 
-      return view('pages.stocks.index',compact('stockList','stockList_raw', 'supplierList', 'suppliers', 'brandList', 'categoryList', 'categories','genericList', 'brands', 'generics'));
+      return view('pages.stocks.index',compact('stockList', 'supplierList', 'suppliers', 'brandList', 'categoryList', 'categories','genericList', 'brands', 'generics'));
     }
 
     public function addStock(Request $request)
