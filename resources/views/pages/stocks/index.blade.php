@@ -133,7 +133,7 @@
                     <div class="form-group{{ $errors->has('expiry_date') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label"> Expiry Date</label>
                         <div class="col-sm-9">
-                          <input type="date" name="expiry_date" required class="form-control" >
+                          <input type="date" name="expiry_date" required class="form-control" min=<?php echo date('Y-m-d');?> >
                         </div>
                     </div><br><br>
                     <div class="form-group{{ $errors->has('unit_price') ? ' has-error' : '' }}">
@@ -202,8 +202,10 @@
                 ?>
                 @if($givenDate > $todayDate && $givenDate < $date_6_months)
                   <td style="color:green">{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
+                @elseif($givenDate < $todayDate)
+                  <td style="color:orange">{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
                 @else
-                  <td>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
+                <td>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
                 @endif
 
                  <td>
@@ -226,7 +228,7 @@
                       {{ csrf_field() }}
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addChargeModal">Update Category</h4>
+                        <h4 class="modal-title" id="addChargeModal">Update Stock</h4>
                       </div>
                       <div class="modal-body">
                         <div class="form-group">
@@ -304,13 +306,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label"> Unit Price</label>
                             <div class="col-sm-9">
-                              <input type="number" min="0" value="{{$stock->unit_price}}" class="form-control"  name="unit_price" placeholder="Unit Price" required>
+                              <input type="number" min="0" step="any" value="{{$stock->unit_price}}" class="form-control"  name="unit_price" placeholder="Unit Price" required>
                             </div>
                         </div><br><br>
                         <div class="form-group">
                             <label class="col-sm-3 control-label"> Selling Price</label>
                             <div class="col-sm-9">
-                              <input type="number" min="0"  value="{{$stock->selling_price}}" class="form-control"  name="selling_price" placeholder="Selling Price" required>
+                              <input type="number" min="0" step="any" value="{{$stock->selling_price}}" class="form-control"  name="selling_price" placeholder="Selling Price" required>
                             </div>
                         </div><br><br>
                         <div class="form-group">
@@ -322,7 +324,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label"> Expirary Date</label>
                             <div class="col-sm-9">
-                              <input type="date" value="{{date('Y-m-d',strtotime($stock->expiry_date))}}" class="form-control"  name="expiry_date" placeholder="Expiry Date" required>
+                              <input type="date" value="{{date('Y-m-d',strtotime($stock->expiry_date))}}" min=<?php echo date('Y-m-d');?> class="form-control"  name="expiry_date" placeholder="Expiry Date" required>
                             </div>
                         </div><br><br>
                       </div>
