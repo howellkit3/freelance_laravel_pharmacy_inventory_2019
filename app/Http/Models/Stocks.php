@@ -29,7 +29,6 @@ class Stocks extends Model
 
 		public static function getSupplierList(){
 			$supplier_list = DB::table('suppliers')
-					->where('status' , 1)
 					->pluck('name', 'id');
 
 			return $supplier_list;
@@ -37,7 +36,6 @@ class Stocks extends Model
 
 		public static function getBrandList(){
 			$brand_list = DB::table('brands')
-					->where('status' , 1)
 					->pluck('name', 'id');
 
 			return $brand_list;
@@ -45,7 +43,6 @@ class Stocks extends Model
 
 		public static function getCategoryList(){
 			$category_list = DB::table('categories')
-					->where('status' , 1)
 					->pluck('name', 'id');
 
 			return $category_list;
@@ -53,7 +50,6 @@ class Stocks extends Model
 
 		public static function getGenericList(){
 			$generic_list = DB::table('generics')
-					->where('status' , 1)
 					->pluck('name', 'id');
 
 			return $generic_list;
