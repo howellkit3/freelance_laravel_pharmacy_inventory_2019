@@ -20,6 +20,7 @@ class Brands extends Model
     public static function getBrands(){
 
    		$BrandsDetails = SELF::orderBy('id', 'desc')
+                           ->where('status' , 1)
                           	->paginate(10);
 
         return $BrandsDetails;

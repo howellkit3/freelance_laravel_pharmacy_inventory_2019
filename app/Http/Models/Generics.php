@@ -19,6 +19,7 @@ class Generics extends Model
 
     public static function getGenerics(){
    		$GenericsDetails = SELF::orderBy('id', 'desc')
+                          ->where('status' , 1)
                           ->paginate(10);
 
       return $GenericsDetails;

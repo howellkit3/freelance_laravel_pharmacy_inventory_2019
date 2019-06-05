@@ -20,6 +20,7 @@ class Categories extends Model
     public static function getCategories(){
 
    		$CategoriesDetails = SELF::orderBy('id', 'desc')
+                           ->where('status' , 1)
                           	->paginate(10);
 
         return $CategoriesDetails;
