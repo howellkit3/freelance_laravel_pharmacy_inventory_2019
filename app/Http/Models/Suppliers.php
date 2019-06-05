@@ -20,7 +20,7 @@ class Suppliers extends Model
     public static function getSuppliers(){
    		$SupplierDetails = SELF::orderBy('id', 'desc')
                           ->where('status' , 1)
-                          ->paginate(10);
+                          ->paginate(5);
 
       return $SupplierDetails;
     }

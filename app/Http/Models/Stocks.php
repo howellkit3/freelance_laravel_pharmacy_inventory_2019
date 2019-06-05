@@ -22,13 +22,24 @@ class Stocks extends Model
                           ->where('stocks.status' , 1)
 													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
 													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
-                          ->paginate(50);
+                          ->paginate(5);
 
       return $StockDetails;
     }
 
+		public static function getStocksOverAll(){
+			$StockDetails = SELF::orderBy('stocks.id', 'desc')
+													->where('stocks.status' , 1)
+													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
+													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
+													->paginate(50);
+
+			return $StockDetails;
+		}
+
 		public static function getSupplierList(){
 			$supplier_list = DB::table('suppliers')
+					->orderBy('name', 'asc')
 					->pluck('name', 'id');
 
 			return $supplier_list;
@@ -36,6 +47,7 @@ class Stocks extends Model
 
 		public static function getBrandList(){
 			$brand_list = DB::table('brands')
+					->orderBy('name', 'asc')
 					->pluck('name', 'id');
 
 			return $brand_list;
@@ -43,6 +55,7 @@ class Stocks extends Model
 
 		public static function getCategoryList(){
 			$category_list = DB::table('categories')
+					->orderBy('name', 'asc')
 					->pluck('name', 'id');
 
 			return $category_list;
@@ -50,6 +63,7 @@ class Stocks extends Model
 
 		public static function getGenericList(){
 			$generic_list = DB::table('generics')
+					->orderBy('name', 'asc')
 					->pluck('name', 'id');
 
 			return $generic_list;

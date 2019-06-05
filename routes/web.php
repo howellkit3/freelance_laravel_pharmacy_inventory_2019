@@ -49,6 +49,8 @@ Route::post("/stock_add", ["uses" => "StocksController@addStock", "as" => "stock
 Route::post("/stock_update", ["uses" => "StocksController@updateStock", "as" => "stock.update"]);
 Route::post("/stock_delete", ["uses" => "StocksController@deleteStock", "as" => "stock.delete"]);
 
+Route::get("/stock_search", ["uses" => "StocksController@searchStock", "as" => "stock_search"]);
+
 Route::post("/add_quantity", ["uses" => "StockQuantitiesController@addQuantity", "as" => "stock.addQuantity"]);
 Route::post("/add_sale", ["uses" => "StockQuantitiesController@addSale", "as" => "stock.addSale"]);
 

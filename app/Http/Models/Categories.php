@@ -21,7 +21,7 @@ class Categories extends Model
 
    		$CategoriesDetails = SELF::orderBy('id', 'desc')
                            ->where('status' , 1)
-                          	->paginate(10);
+                          	->paginate(5);
 
         return $CategoriesDetails;
     }

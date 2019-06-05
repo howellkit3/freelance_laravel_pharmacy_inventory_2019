@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>Collapsible sidebar using Bootstrap 3</title>
+        <title>Pharmacy Inventory System</title>
 
          <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -25,10 +25,15 @@
                     <!-- <li class="active">
                         <a href="{{ route('home') }}">Home</a>
                     </li> -->
+
                     <li>
-                      <li><a href="{{ route('stocks') }}">Stocks
-                      </a></li>
+                      <a href="{{ route('stocks') }}">Stocks</a>
                     </li>
+
+                    <li>
+                      <a href="{{ route('stock_search') }}">Over All Stocks</a>
+                    </li>
+
                     <!-- <li>
                         <a href="#admin" data-toggle="collapse" aria-expanded="false">Admin</a>
                         <ul class="collapse list-unstyled" id="admin">

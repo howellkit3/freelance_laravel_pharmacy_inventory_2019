@@ -50,6 +50,31 @@ class StocksController extends Controller
       return view('pages.stocks.index',compact('stockList', 'supplierList', 'suppliers', 'brandList', 'categoryList', 'categories','genericList', 'brands', 'generics'));
     }
 
+    public function searchStock()
+    {
+      $Stocks = new Stocks;
+      $stockList = $Stocks->getStocksOverAll();
+
+      $StockQuantities = new StockQuantities;
+      $stockList = $StockQuantities->insertStockQuantity($stockList);
+
+      $Brands = new Brands;
+      $brandList = $Brands->getBrands();
+
+      $Generics = new Generics;
+      $genericList = $Generics->getGenerics();
+
+      $Categories = new Categories;
+      $categoryList = $Categories->getCategories();
+
+      $Suppliers = new Suppliers;
+      $supplierList = $Suppliers->getSuppliers();
+
+      return view('pages.stocks.overall',compact('stockList','brandList','genericList','categoryList','supplierList'));
+
+      print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit;
+    }
+
     public function addStock(Request $request)
     {
       if($request->has('_token')) {

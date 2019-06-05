@@ -184,13 +184,13 @@
                  <td>{{ $key + 1 }} </td>
                  <td>{{ ucfirst($stock->stock_num) }}</td>
                  <td>{{ !empty($brands[$stock->brand_id]) ? $brands[$stock->brand_id] : 'undefined'  }}</td>
-                 <td>{{ !empty($categories[$stock->category_id]) ? $categories[$stock->category_id] : 'undefined'  }}</td>
-                 <td>{{ !empty($generics[$stock->generic_id]) ? $generics[$stock->generic_id] : 'undefined'  }}</td>
+                 <td>{{ !empty($categories[$stock->category_id]) ? substr($categories[$stock->category_id], 0, 15) . "..." : 'undefined'  }}</td>
+                 <td>{{ !empty($generics[$stock->generic_id]) ? substr($generics[$stock->generic_id], 0, 15) . "..." : 'undefined'  }}</td>
                  <td>{{ !empty($suppliers[$stock->supplier_id]) ? $suppliers[$stock->supplier_id] : 'undefined'  }}</td>
                  <td>{{ $stock->size }}</td>
                  <td>{{ $stock->unit_price }}</td>
                  <td>{{ $stock->selling_price }}</td>
-                 @if($stock->available  < 11)
+                 @if($stock->available  < 6)
                   <td style="color:red"><b>{{ $stock->available }}</b></td>
                 @else
                   <td><b>{{ $stock->available }}</b></td>
@@ -213,7 +213,7 @@
                       <button type="button" class="btn btn-info btn-xs">Edit</button>
                   </a>
                   <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->stocks_id}}">
-                     <button type="button" class="btn btn-success btn-xs">Add Quantity</button>
+                     <button type="button" class="btn btn-success btn-xs">Add</button>
                  </a>
                  </td>
               </tr>
@@ -441,17 +441,17 @@
                    <td>{{ ($brand->status) == 1 ? 'Active' : 'Inactive' }}</td>
                    <td>{{ $brand->created_at }}</td>
                    <td>
-                     <a href="#" data-toggle="modal" data-target="#update_category{{$brand->id}}">
+                     <a href="#" data-toggle="modal" data-target="#update_brand{{$brand->id}}">
                         <button type="button" class="btn btn-info btn-xs">Edit</button>
                     </a>
-                    <a href="#" data-toggle="modal" data-target="#delete_category{{$brand->id}}">
+                    <a href="#" data-toggle="modal" data-target="#delete_brand{{$brand->id}}">
                        <button type="button" class="btn btn-danger btn-xs">Delete</button>
                    </a>
                    </td>
                 </tr>
 
                 <!-- Modal for Update -->
-                <div class="modal fade" id="update_category{{$brand->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="update_brand{{$brand->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <form method="POST" action="{{ route('brand.update') }}" id ="updateBrandForm{{$brand->id}}">
@@ -480,7 +480,7 @@
                 <!-- End Modal for Update -->
 
                 <!-- Modal for Delete -->
-                <div class="modal fade" id="delete_category{{$brand->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="delete_brand{{$brand->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <form method="POST" action="{{ route('brand.delete') }} " id ="deleteBrandForm{{$brand->id}}">
@@ -556,7 +556,7 @@
             <tbody>
               <?php foreach ($genericList as $generic) { ?>
                 <tr>
-                   <td>{{ ucfirst($generic->name) }}</td>
+                   <td>{{ substr(ucfirst($generic->name), 0 , 15) . "..." }}</td>
                    <td>{{ ($generic->status) == 1 ? 'Active' : 'Inactive' }}</td>
                    <td>{{ $generic->created_at }}</td>
                    <td>
@@ -676,7 +676,7 @@
             <tbody>
               <?php foreach ($categoryList as $category) { ?>
                 <tr>
-                   <td>{{ ucfirst($category->name) }}</td>
+                   <td>{{ substr(ucfirst($category->name), 0, 15) . "..." }}</td>
                    <td>{{ ($category->status) == 1 ? 'Active' : 'Inactive' }}</td>
                    <td>{{ $category->created_at }}</td>
                    <td>
