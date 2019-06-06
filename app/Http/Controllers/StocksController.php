@@ -123,6 +123,17 @@ class StocksController extends Controller
       return redirect()->route('stocks')->with('success','Stock has been updated successfully!');
     }
 
+    public function deleteStock(Request $request)
+    {
+      if($request->has('_token')) {
+        $stock_form = $request->all();
+        $stock_details['status'] = 0;
+        $Stocks = new Stocks;
+        $stock_id = $Stocks->updateStock($stock_details, $stock_form['stocks_id']);
+      }
+      return redirect()->route('stock_search')->with('success','Stock has been removed successfully!');
+    }
+
     public function deleteSupplier(Request $request)
     {
       if($request->has('_token')) {
@@ -149,7 +160,7 @@ class StocksController extends Controller
         $StockQuantities = new StockQuantities;
         $stockList = $StockQuantities->insertStockQuantity($stockList);
 
-        //print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit; 
+        //print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit;
 
         return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));
     }

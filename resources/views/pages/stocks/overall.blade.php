@@ -75,6 +75,9 @@
                    <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
                       <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                   </a>
+                  <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->stocks_id}}">
+                     <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                 </a>
                  </td>
               </tr>
 
@@ -191,6 +194,28 @@
                       <div class="modal-footer">
                         <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" form="updateStockForm{{$stock->stocks_id}}" class="btn btn-info">Save changes</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- End Modal for Update -->
+
+              <!-- Modal for Remove -->
+              <div class="modal fade" id="remove_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <form method="POST" action="{{ route('stock.delete') }}" id ="removeStockForm{{$stock->stocks_id}}">
+                      <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
+                      <input type="hidden" value="{{$stock->stock_infos_id}}" name="stock_infos_id">
+                      {{ csrf_field() }}
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addChargeModal">Are you sure you want to remove {{$brands[$stock->brand_id]}} ? </h4>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" form="removeStockForm{{$stock->stocks_id}}" class="btn btn-warning">Remove</button>
                       </div>
                     </form>
                   </div>
