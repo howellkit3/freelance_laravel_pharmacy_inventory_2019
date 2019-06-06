@@ -18,7 +18,7 @@
          <div class="input-group reservation-input-group  pull-right">
            <form method="POST" action="{{ route('search_stock') }}" id ="search_stocks}">
              {{ csrf_field() }}
-             <input type="text" class="form-control" name="keyword" id="search_stocks" placeholder="Stock Keyword">
+             <input type="text" class="form-control" name="keyword" id="search_stocks" placeholder="Search Brand">
            </form>
          </div>
        </div>

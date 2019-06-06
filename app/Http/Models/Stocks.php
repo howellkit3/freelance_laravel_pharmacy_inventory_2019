@@ -122,7 +122,7 @@ class Stocks extends Model
 													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
 													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
 													->where('brands.name', 'like', '%'.$keyword.'%')
-													->get();
+													->paginate(50);
 
 			return $StockDetails;
 		}

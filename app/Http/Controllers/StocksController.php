@@ -138,18 +138,19 @@ class StocksController extends Controller
 
     public function showSearchStock(Request $request)
     {
-        //$keyword = $request->input('keyword');
+        $keyword = $request->input('keyword');
+        $Stocks = new Stocks;
+        $stockList = $Stocks->getSearch($keyword);
+        $suppliers = $Stocks->getSupplierList();
+        $brands = $Stocks->getBrandList();
+        $categories = $Stocks->getCategoryList();
+        $generics = $Stocks->getGenericList();
 
-        // $Stocks = new Stocks;
-        // $stockList = $Stocks->getSearch($keyword);
-        // $suppliers = $Stocks->getSupplierList();
-        // $brands = $Stocks->getBrandList();
-        // $categories = $Stocks->getCategoryList();
-        // $generics = $Stocks->getGenericList();
-        //
-        // $StockQuantities = new StockQuantities;
-        // $stockList = $StockQuantities->insertStockQuantity();
-        return $request;
-        return view('frontdesk::reservations.searched_details', compact('reservation_details'));
+        $StockQuantities = new StockQuantities;
+        $stockList = $StockQuantities->insertStockQuantity($stockList);
+
+        //print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit; 
+
+        return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));
     }
 }
