@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Our Custom CSS -->
         <link href="{{ asset('css/default-index.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
     </head>
     <body>
         <div class="wrapper">

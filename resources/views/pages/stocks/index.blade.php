@@ -13,11 +13,6 @@
           Add Sale
           <i class="entypo-list-add"></i>
           </a>
-
-          <a href="{{route('daily-sales-excel')}}" target="_blank" class="btn btn-default btn-icon">
-            Export Stock Table
-          <i class="entypo-list-add"></i>
-          </a>
           <!-- Modal for Create -->
           <div class="modal fade" id="addStockSale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -210,10 +205,10 @@
 
                  <td>
                    <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
-                      <button type="button" class="btn btn-info btn-xs">Edit</button>
+                      <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                   </a>
                   <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->stocks_id}}">
-                     <button type="button" class="btn btn-success btn-xs">Add</button>
+                     <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
                  </a>
                  </td>
               </tr>
@@ -442,10 +437,10 @@
                    <td>{{ $brand->created_at }}</td>
                    <td>
                      <a href="#" data-toggle="modal" data-target="#update_brand{{$brand->id}}">
-                        <button type="button" class="btn btn-info btn-xs">Edit</button>
+                        <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                     </a>
                     <a href="#" data-toggle="modal" data-target="#delete_brand{{$brand->id}}">
-                       <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                       <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                    </a>
                    </td>
                 </tr>
@@ -561,10 +556,10 @@
                    <td>{{ $generic->created_at }}</td>
                    <td>
                      <a href="#" data-toggle="modal" data-target="#update_generic{{$generic->id}}">
-                        <button type="button" class="btn btn-info btn-xs">Edit</button>
+                        <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                     </a>
                     <a href="#" data-toggle="modal" data-target="#delete_generic{{$generic->id}}">
-                       <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                       <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                    </a>
                    </td>
                 </tr>
@@ -681,10 +676,10 @@
                    <td>{{ $category->created_at }}</td>
                    <td>
                      <a href="#" data-toggle="modal" data-target="#update_category{{$category->id}}">
-                        <button type="button" class="btn btn-info btn-xs">Edit</button>
+                        <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                     </a>
                     <a href="#" data-toggle="modal" data-target="#delete_category{{$category->id}}">
-                       <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                       <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                    </a>
                    </td>
                 </tr>
@@ -799,10 +794,10 @@
                    <td>{{ $supplier->created_at }}</td>
                    <td>
                      <a href="#" data-toggle="modal" data-target="#update_supplier{{$supplier->id}}">
-                        <button type="button" class="btn btn-info btn-xs">Edit</button>
+                        <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                     </a>
                     <a href="#" data-toggle="modal" data-target="#delete_supplier{{$supplier->id}}">
-                       <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                       <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                    </a>
                    </td>
                 </tr>

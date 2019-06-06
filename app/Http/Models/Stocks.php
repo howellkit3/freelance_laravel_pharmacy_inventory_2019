@@ -114,4 +114,26 @@ class Stocks extends Model
 
 			return $StockDetails;
 		}
+
+		public static function getSearch($keyword){
+			$StockDetails = SELF::orderBy('stocks.id', 'desc')
+													->where('stocks.status' , 1)
+													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
+													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
+													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
+													->where('brands.name', 'like', '%'.$keyword.'%')
+													->get();
+
+			return $StockDetails;
+		}
 }
+
+// $reservation_list = SELF::orderBy('reservations.check_in', 'asc')
+// 		->select('reservations.id as reservation_id','reservations.check_in','reservations.check_out','reservation_rooms.id as reservation_rooms_id',
+// 				'reservations.created_at','reservation_rooms.head_count','reservations.reservation_num')
+// 		->join('reservation_rooms', 'reservation_rooms.reservation_id', '=', 'reservations.id')
+// 		->where('reservations.status' , 1)
+// 		->where('reservation_num', 'like', '%'.$reservation_num.'%')
+// 		->where('property_id', $property_id)
+// 		->whereDate('reservations.check_in', '>', Carbon::now())
+// 		->get();

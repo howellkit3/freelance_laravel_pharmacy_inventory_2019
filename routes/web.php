@@ -63,6 +63,8 @@ Route::get("/sales_report", ["uses" => "DailySalesController@showReportPage", "a
 Route::get("/stocks-excel", ["uses" => "ExcelController@exportStocks", "as" => "stocks-excel"]);
 Route::get("/daily-sales-excel", ["uses" => "ExcelController@exportDailySales", "as" => "daily-sales-excel"]);
 
+Route::post('/search_stock', ["uses" => "StocksController@showSearchStock", "as" => "search_stock"]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

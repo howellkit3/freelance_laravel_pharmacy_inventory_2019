@@ -54,25 +54,15 @@ class StocksController extends Controller
     {
       $Stocks = new Stocks;
       $stockList = $Stocks->getStocksOverAll();
+      $suppliers = $Stocks->getSupplierList();
+      $brands = $Stocks->getBrandList();
+      $categories = $Stocks->getCategoryList();
+      $generics = $Stocks->getGenericList();
 
       $StockQuantities = new StockQuantities;
       $stockList = $StockQuantities->insertStockQuantity($stockList);
 
-      $Brands = new Brands;
-      $brandList = $Brands->getBrands();
-
-      $Generics = new Generics;
-      $genericList = $Generics->getGenerics();
-
-      $Categories = new Categories;
-      $categoryList = $Categories->getCategories();
-
-      $Suppliers = new Suppliers;
-      $supplierList = $Suppliers->getSuppliers();
-
-      return view('pages.stocks.overall',compact('stockList','brandList','genericList','categoryList','supplierList'));
-
-      print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit;
+      return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));
     }
 
     public function addStock(Request $request)
@@ -120,7 +110,7 @@ class StocksController extends Controller
         $stock_details['size'] = $stock_form['size'];
         $stock_details['status'] = 1;
         $Stocks = new Stocks;
-      //  print_r($stock_details); exit;
+
         $stock_id = $Stocks->updateStock($stock_details, $stock_form['stocks_id']);
 
         $stock_info_details['lot_number'] = $stock_form['lot_number'];
@@ -144,5 +134,22 @@ class StocksController extends Controller
         $Stocks->deleteStock($stock_details);
       }
       return redirect()->route('stocks')->with('success','Stock has been deleted successfully!');
+    }
+
+    public function showSearchStock(Request $request)
+    {
+        //$keyword = $request->input('keyword');
+
+        // $Stocks = new Stocks;
+        // $stockList = $Stocks->getSearch($keyword);
+        // $suppliers = $Stocks->getSupplierList();
+        // $brands = $Stocks->getBrandList();
+        // $categories = $Stocks->getCategoryList();
+        // $generics = $Stocks->getGenericList();
+        //
+        // $StockQuantities = new StockQuantities;
+        // $stockList = $StockQuantities->insertStockQuantity();
+        return $request;
+        return view('frontdesk::reservations.searched_details', compact('reservation_details'));
     }
 }

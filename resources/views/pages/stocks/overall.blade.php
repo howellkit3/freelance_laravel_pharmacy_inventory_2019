@@ -3,15 +3,28 @@
 <div class="row">
   <div class="col-md-12">
     <div class="users-table">
-       <div class="table-top-links pull-right">
-          <a href="{{route('daily-sales-excel')}}" target="_blank" class="btn btn-default btn-icon">
-            Export Stock Table
-          <i class="entypo-list-add"></i>
-          </a>
+       <div class="col-md-3">
+         <h3 style="margin-top:0px">Stocks Table</h3>
        </div>
-       <h3>Stocks Table</h3>
+       <div class="col-md-7">
+         <div class="table-top-links pull-right">
+            <a href="{{route('stocks-excel')}}" target="_blank" class="btn btn-default btn-icon">
+              Export Stock Table
+            <i class="entypo-list-add"></i>
+            </a>
+         </div>
+       </div>
+       <div class="col-md-2">
+         <div class="input-group reservation-input-group  pull-right">
+           <form method="POST" action="{{ route('search_stock') }}" id ="search_stocks}">
+             {{ csrf_field() }}
+             <input type="text" class="form-control" name="keyword" id="search_stocks" placeholder="Stock Keyword">
+           </form>
+         </div>
+       </div>
        <br><br>
-       <table class="table table-bordered responsive" id="table-2">
+       <section class="stock_list">
+        <table class="table table-bordered responsive" id="table-2">
           <thead>
              <tr>
                 <th>#</th>
@@ -60,10 +73,10 @@
 
                  <td>
                    <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
-                      <button type="button" class="btn btn-info btn-xs">Edit</button>
+                      <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                   </a>
                   <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->stocks_id}}">
-                     <button type="button" class="btn btn-success btn-xs">Add</button>
+                     <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
                  </a>
                  </td>
               </tr>
@@ -111,6 +124,9 @@
             <?php } ?>
           </tbody>
        </table>
+       </section>
+       <?php header('Access-Control-Allow-Origin: *'); ?>
+       <section class="search_append"></section>
       {{ $stockList->links() }}
     </div>
   </div>
