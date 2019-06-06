@@ -75,22 +75,20 @@
                    <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
                       <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                   </a>
-                  <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->stocks_id}}">
-                     <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-                 </a>
                  </td>
               </tr>
 
-              <!-- Modal for Add Stock -->
-              <div class="modal fade" id="add_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- Modal for Update -->
+              <div class="modal fade" id="update_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
-                    <form method="POST" action="{{ route('stock.addQuantity') }}" id ="addStockForm{{$stock->stocks_id}}">
+                    <form method="POST" action="{{ route('stock.update') }}" id ="updateStockForm{{$stock->stocks_id}}">
                       <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
+                      <input type="hidden" value="{{$stock->stock_infos_id}}" name="stock_infos_id">
                       {{ csrf_field() }}
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addChargeModal">Add Quantity To Stock</h4>
+                        <h4 class="modal-title" id="addChargeModal">Update Stock</h4>
                       </div>
                       <div class="modal-body">
                         <div class="form-group">
@@ -100,21 +98,99 @@
                             </div>
                         </div><br><br>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"> Quantity</label>
+                            <label class="col-sm-3 control-label"> Brand {{$stock->brand_id}}</label>
                             <div class="col-sm-9">
-                              <input type="number" min="0" class="form-control"  name="quantity" placeholder="Quantity" required>
+                              <select class="form-control" name="brand_id" required>
+                                 <option disabled>Select Brand  </option>
+                                 @foreach ($brands as $key => $brand)
+                                    @if($key == $stock->brand_id)
+                                      <option value="{{$key}}" selected>{{ ucfirst($brand) }}</option>
+                                    @else
+                                      <option value="{{$key}}">{{ ucfirst($brand) }}</option>
+                                    @endif
+                                 @endforeach
+                              </select>
                             </div>
                         </div><br><br>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"> Date Delivered</label>
+                            <label class="col-sm-3 control-label"> Category</label>
                             <div class="col-sm-9">
-                              <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                              <select class="form-control" name="category_id" required>
+                                 <option disabled>Select Category  </option>
+                                 @foreach ($categories as $key => $category)
+                                    @if($key == $stock->category_id)
+                                      <option value="{{$key}}" selected>{{ ucfirst($category) }}</option>
+                                    @else
+                                      <option value="{{$key}}">{{ ucfirst($category) }}</option>
+                                    @endif
+                                 @endforeach
+                              </select>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Generic</label>
+                            <div class="col-sm-9">
+                              <select class="form-control" name="generic_id" required>
+                                 <option disabled>Select Generic</option>
+                                 @foreach ($generics as $key => $generic)
+                                    @if($key == $stock->generic_id)
+                                      <option value="{{$key}}" selected>{{ ucfirst($generic) }}</option>
+                                    @else
+                                      <option value="{{$key}}">{{ ucfirst($generic) }}</option>
+                                    @endif
+                                 @endforeach
+                              </select>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Supplier</label>
+                            <div class="col-sm-9">
+                              <select class="form-control" name="supplier_id" required>
+                                 <option disabled>Select Supplier  </option>
+                                 @foreach ($suppliers as $key => $supplier)
+                                    @if($key == $stock->supplier_id)
+                                      <option value="{{$key}}" selected>{{ ucfirst($supplier) }}</option>
+                                    @else
+                                      <option value="{{$key}}">{{ ucfirst($supplier) }}</option>
+                                    @endif
+                                 @endforeach
+                              </select>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Size</label>
+                            <div class="col-sm-9">
+                              <input type="text" value="{{$stock->size}}" class="form-control"  name="size" placeholder="Size" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Unit Price</label>
+                            <div class="col-sm-9">
+                              <input type="number" min="0" step="any" value="{{$stock->unit_price}}" class="form-control"  name="unit_price" placeholder="Unit Price" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Selling Price</label>
+                            <div class="col-sm-9">
+                              <input type="number" min="0" step="any" value="{{$stock->selling_price}}" class="form-control"  name="selling_price" placeholder="Selling Price" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Lot Number</label>
+                            <div class="col-sm-9">
+                              <input type="text" value="{{$stock->lot_number}}" class="form-control"  name="lot_number" placeholder="Lot Number" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Expirary Date</label>
+                            <div class="col-sm-9">
+                              <input type="date" value="{{date('Y-m-d',strtotime($stock->expiry_date))}}" min=<?php echo date('Y-m-d');?> class="form-control"  name="expiry_date" placeholder="Expiry Date" required>
                             </div>
                         </div><br><br>
                       </div>
                       <div class="modal-footer">
                         <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" form="addStockForm{{$stock->stocks_id}}" class="btn btn-info">Add to Quantity</button>
+                        <button type="submit" form="updateStockForm{{$stock->stocks_id}}" class="btn btn-info">Save changes</button>
                       </div>
                     </form>
                   </div>
