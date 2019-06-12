@@ -30,7 +30,7 @@
                           <select class="form-control" name="stock_id" required>
                             <option disabled>Select Stock Num</option>
                             @foreach ($stockList as $key => $stock)
-                               <option value="{{$stock->id}}">
+                               <option value="{{$stock->stock_id}}">
                                  {{ $stock->stock_num . ' : ' .  ucfirst($brands[$stock->brand_id]) .' - '. ucfirst($categories[$stock->category_id]) .' - '. $stock->size }}</option>
                             @endforeach
                           </select>
