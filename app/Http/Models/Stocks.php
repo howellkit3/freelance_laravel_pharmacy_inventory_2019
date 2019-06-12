@@ -37,6 +37,20 @@ class Stocks extends Model
 			return $StockDetails;
 		}
 
+		public static function checkDuplicate($stock_details){
+			$StockDetails = SELF::where('brand_id' , $stock_details['brand_id'])
+													->where('category_id' , $stock_details['category_id'])
+													->where('supplier_id' , $stock_details['supplier_id'])
+													->where('generic_id' , $stock_details['generic_id'])
+													->where('size' , $stock_details['size'])
+													->first();
+
+			if(!empty($StockDetails)) {
+				return true;
+			}
+			return false;
+		}
+
 		public static function getSupplierList(){
 			$supplier_list = DB::table('suppliers')
 					->orderBy('created_at', 'desc')

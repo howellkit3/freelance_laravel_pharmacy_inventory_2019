@@ -92,16 +92,22 @@ class StocksController extends Controller
         $stock_details['status'] = 1;
         $Stocks = new Stocks;
 
-        $stock_id = $Stocks->addStock($stock_details);
+        $isDuplicate = $Stocks->checkDuplicate($stock_details);
 
-        $stock_info_details['stock_id'] = $stock_id;
-        $stock_info_details['lot_number'] = $stock_form['lot_number'];
-        $stock_info_details['expiry_date'] = $stock_form['expiry_date'];
-        $stock_info_details['unit_price'] = $stock_form['unit_price'];
-        $stock_info_details['selling_price'] = $stock_form['selling_price'];
+        if(!$isDuplicate) {
+          $stock_id = $Stocks->addStock($stock_details);
 
-        $StockInfos = new StockInfos;
-        $StockInfos->addStockInfo($stock_info_details);
+          $stock_info_details['stock_id'] = $stock_id;
+          $stock_info_details['lot_number'] = $stock_form['lot_number'];
+          $stock_info_details['expiry_date'] = $stock_form['expiry_date'];
+          $stock_info_details['unit_price'] = $stock_form['unit_price'];
+          $stock_info_details['selling_price'] = $stock_form['selling_price'];
+
+          $StockInfos = new StockInfos;
+          $StockInfos->addStockInfo($stock_info_details);
+        } else {
+          return redirect()->route('stocks')->with('error','The Stock you created already Exist');
+        }
       }
 
       return redirect()->route('stocks')->with('success','Stock has been created successfully!');

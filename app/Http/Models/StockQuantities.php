@@ -4,6 +4,7 @@ namespace App\Http\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class StockQuantities extends Model
 {
@@ -43,6 +44,22 @@ class StockQuantities extends Model
 		{
 			$stock_quantity = SELF::create($stock_quantity_details);
 			return $stock_quantity->id;
+		}
+
+		public function checkDuplicateQuantity($stock_quantity_details)
+		{
+			$isAlreadyExist = DB::table('stock_quantities')
+					->where('stock_id', $stock_quantity_details['stock_id'])
+					->where('quantity', $stock_quantity_details['quantity'])
+					->where('date_sold', $stock_quantity_details['date_sold'])
+					->where('created_at', Carbon::now()->toDateTimeString())
+					->first();
+
+			if(!empty($isAlreadyExist)) {
+				return true;
+			}
+
+			return false;
 		}
 
 		public function insertStockQuantity($stocks)
@@ -103,7 +120,6 @@ class StockQuantities extends Model
 
 		public static function checkStockAndDateSold($sale_form)
 		{
-	//		print_r('<pre>'); print_r($sale_form['date_sold']); print_r('</pre>'); exit;
 			$isExist = DB::table('stock_quantities')
 					->where('date_sold', $sale_form['date_sold'])
 					->where('stock_id',  $sale_form['stock_id'])
