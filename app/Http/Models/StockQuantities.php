@@ -65,13 +65,14 @@ class StockQuantities extends Model
 		public function insertStockQuantity($stocks)
 		{
 			foreach ($stocks as $key => $value) {
+
 				$adds = DB::table('stock_quantities')
-						->where('stock_id', $value->id)
+						->where('stock_id', $value->stocks_id)
 						->where('type', 1)
 						->sum('quantity');
 
 				$subtracts = DB::table('stock_quantities')
-						->where('stock_id', $value->id)
+						->where('stock_id', $value->stocks_id)
 						->where('type', 0)
 						->sum('quantity');
 

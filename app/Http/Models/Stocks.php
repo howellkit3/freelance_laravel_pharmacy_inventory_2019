@@ -20,6 +20,7 @@ class Stocks extends Model
     public static function getStocks(){
    		$StockDetails = SELF::orderBy('stocks.id', 'desc')
                           ->where('stocks.status' , 1)
+													//->where('stocks.stock_num' , 1683248) //here
 													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
 													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
                           ->paginate(5);
