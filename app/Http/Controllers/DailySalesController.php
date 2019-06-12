@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Models\StockQuantities;
 use App\Http\Models\Stocks;
+use App\Http\Models\Brands;
+use App\Http\Models\Generics;
 
 class DailySalesController extends Controller
 {
@@ -63,10 +65,13 @@ class DailySalesController extends Controller
       $dailySalesList = $StockQuantities->getSoldDates();
       $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
       $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
-      $brandList = $Stocks->getBrandList();
-      $genericList = $Stocks->getGenericList();
 
-    //  print_r('<pre>');print_r($dailySalesList);print_r('</pre>'); exit;
+      $Brands = new Brands;
+      $brandList = $Brands->getAllBrands();
+
+      $Generics = new Generics;
+      $genericList = $Generics->getAllGenerics();
+
       return view('pages.daily_sales.sales_report',compact('dailySalesList', 'brandList', 'genericList'));
     }
 }
