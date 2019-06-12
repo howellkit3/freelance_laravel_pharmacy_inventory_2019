@@ -99,7 +99,7 @@ class StocksController extends Controller
 
           $stock_info_details['stock_id'] = $stock_id;
           $stock_info_details['lot_number'] = $stock_form['lot_number'];
-          $stock_info_details['expiry_date'] = $stock_form['expiry_date'];
+          $stock_info_details['expiry_date'] = date('Y-m-d', strtotime($stock_form['expiry_date']));
           $stock_info_details['unit_price'] = $stock_form['unit_price'];
           $stock_info_details['selling_price'] = $stock_form['selling_price'];
 
