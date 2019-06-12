@@ -52,7 +52,7 @@ class StockQuantities extends Model
 					->where('stock_id', $stock_quantity_details['stock_id'])
 					->where('quantity', $stock_quantity_details['quantity'])
 					->where('date_sold', $stock_quantity_details['date_sold'])
-					->where('created_at', Carbon::now()->toDateTimeString())
+					//->where('created_at', Carbon::now()->toDateTimeString())
 					->first();
 
 			if(!empty($isAlreadyExist)) {
