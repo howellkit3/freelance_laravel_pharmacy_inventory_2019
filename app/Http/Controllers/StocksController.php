@@ -54,10 +54,18 @@ class StocksController extends Controller
     {
       $Stocks = new Stocks;
       $stockList = $Stocks->getStocksOverAll();
-      $suppliers = $Stocks->getSupplierList();
-      $brands = $Stocks->getBrandList();
-      $categories = $Stocks->getCategoryList();
-      $generics = $Stocks->getGenericList();
+
+      $Suppliers = new Suppliers;
+      $suppliers = $Suppliers->getAllSuppliers();
+
+      $Brands = new Brands;
+      $brands = $Brands->getAllBrands();
+
+      $Categories = new Categories;
+      $categories = $Categories->getAllCategories();
+
+      $Generics = new Generics;
+      $generics = $Generics->getAllGenerics();
 
       $StockQuantities = new StockQuantities;
       $stockList = $StockQuantities->insertStockQuantity($stockList);
@@ -152,15 +160,21 @@ class StocksController extends Controller
         $keyword = $request->input('keyword');
         $Stocks = new Stocks;
         $stockList = $Stocks->getSearch($keyword);
-        $suppliers = $Stocks->getSupplierList();
-        $brands = $Stocks->getBrandList();
-        $categories = $Stocks->getCategoryList();
-        $generics = $Stocks->getGenericList();
+
+        $Suppliers = new Suppliers;
+        $suppliers = $Suppliers->getAllSuppliers();
+
+        $Brands = new Brands;
+        $brands = $Brands->getAllBrands();
+
+        $Categories = new Categories;
+        $categories = $Categories->getAllCategories();
+
+        $Generics = new Generics;
+        $generics = $Generics->getAllGenerics();
 
         $StockQuantities = new StockQuantities;
         $stockList = $StockQuantities->insertStockQuantity($stockList);
-
-        //print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit;
 
         return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));
     }

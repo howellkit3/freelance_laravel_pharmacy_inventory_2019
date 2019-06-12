@@ -25,6 +25,14 @@ class Generics extends Model
       return $GenericsDetails;
     }
 
+		public static function getAllGenerics(){
+			$generic_list = DB::table('generics')
+					->orderBy('created_at', 'desc')
+					->pluck('name', 'id');
+
+			return $generic_list;
+		}
+
 		public function addGeneric($generic_details) {
 			$generic = SELF::create($generic_details);
 			return $generic->id;

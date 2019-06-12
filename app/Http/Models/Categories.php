@@ -26,6 +26,14 @@ class Categories extends Model
         return $CategoriesDetails;
     }
 
+		public static function getAllCategories(){
+			$category_list = DB::table('categories')
+					->orderBy('created_at', 'desc')
+					->pluck('name', 'id');
+
+			return $category_list;
+		}
+
 		public function addCategory($category_details) {
 			$category = SELF::create($category_details);
 			return $category->id;

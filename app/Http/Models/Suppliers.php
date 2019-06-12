@@ -25,6 +25,13 @@ class Suppliers extends Model
       return $SupplierDetails;
     }
 
+		public static function getAllSuppliers(){
+			$supplier_list = DB::table('suppliers')
+					->orderBy('created_at', 'desc')
+					->pluck('name', 'id');
+			return $supplier_list;
+		}
+
 		public function addSupplier($supplier_details) {
 			$supplier = SELF::create($supplier_details);
 			return $supplier->id;

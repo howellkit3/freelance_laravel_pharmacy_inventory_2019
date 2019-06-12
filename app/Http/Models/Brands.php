@@ -26,6 +26,15 @@ class Brands extends Model
         return $BrandsDetails;
     }
 
+		public static function getAllBrands(){
+
+			$brand_list = DB::table('brands')
+					->orderBy('created_at', 'desc')
+					->pluck('name', 'id');
+
+				return $brand_list;
+		}
+
 		public function addBrand($brand_details) {
 			$brand = SELF::create($brand_details);
 			return $brand->id;
