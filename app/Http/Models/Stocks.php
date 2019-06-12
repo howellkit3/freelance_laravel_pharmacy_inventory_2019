@@ -43,6 +43,7 @@ class Stocks extends Model
 													->where('supplier_id' , $stock_details['supplier_id'])
 													->where('generic_id' , $stock_details['generic_id'])
 													->where('size' , $stock_details['size'])
+													->where('status' , 1)
 													->first();
 
 			if(!empty($StockDetails)) {
