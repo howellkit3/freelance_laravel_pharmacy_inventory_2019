@@ -70,14 +70,16 @@
                 @else
                 <td>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
                 @endif
-
                  <td>
                    <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
                       <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                   </a>
+                  <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->stocks_id}}">
+                     <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                   </a>
                   <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->stocks_id}}">
                      <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
-                 </a>
+                   </a>
                  </td>
               </tr>
 
@@ -222,6 +224,48 @@
                 </div>
               </div>
               <!-- End Modal for Update -->
+
+
+              <!-- Modal for Add Stock -->
+              <div class="modal fade" id="add_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <form method="POST" action="{{ route('stock.addQuantity') }}" id ="addStockForm{{$stock->stocks_id}}">
+                      <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
+                      {{ csrf_field() }}
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addChargeModal">Add Quantity To Stock</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Stock#</label>
+                            <div class="col-sm-9">
+                              <input type="text" disabled value="{{$stock->stock_num}}" class="form-control"  name="stock_num" placeholder="Category Name" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Quantity</label>
+                            <div class="col-sm-9">
+                              <input type="number" min="0" class="form-control"  name="quantity" placeholder="Quantity" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Date Delivered</label>
+                            <div class="col-sm-9">
+                              <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                        </div><br><br>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" form="addStockForm{{$stock->stocks_id}}" class="btn btn-info">Add to Quantity</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- End Modal Add Stock -->
             <?php } ?>
           </tbody>
        </table>

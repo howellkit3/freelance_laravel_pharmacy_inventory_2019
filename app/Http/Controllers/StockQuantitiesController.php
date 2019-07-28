@@ -30,7 +30,7 @@ class StockQuantitiesController extends Controller
         $stock_quantity_details['stock_id'] = $stock_quantity_form['stocks_id'];
         $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
         $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
-        
+
         $StockQuantities = new StockQuantities;
         $isDuplicate = $StockQuantities->checkDuplicateQuantity($stock_quantity_details);
 
@@ -38,7 +38,7 @@ class StockQuantitiesController extends Controller
           $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
         }
 
-        return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
+        return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
       } else {
         return view('pages.daily_sales.index',compact('dailySalesList', 'brandList', 'categoryList','stockList'));
       }
