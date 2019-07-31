@@ -29,11 +29,13 @@ class Stocks extends Model
     }
 
 		public static function getStocksOverAll(){
-			$StockDetails = SELF::orderBy('stocks.id', 'desc')
+			$StockDetails = SELF::orderBy('brands.name', 'asc')
 													->where('stocks.status' , 1)
-													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
+													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id'
+														,'stocks.id as stocks_id', 'brands.name as brand_name')
 													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
-													->paginate(50);
+													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
+													->paginate(100);
 
 			return $StockDetails;
 		}
@@ -112,7 +114,7 @@ class Stocks extends Model
 		}
 
 		public static function getStocksExport(){
-			$StockDetails = SELF::orderBy('stocks.id', 'desc')
+			$StockDetails = SELF::orderBy('brands.name', 'asc')
 					->where('stocks.status' , 1)
 					->select('stocks.id',
 									'stocks.stock_num',

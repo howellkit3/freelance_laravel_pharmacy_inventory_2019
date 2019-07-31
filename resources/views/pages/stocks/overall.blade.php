@@ -46,7 +46,7 @@
               <tr>
                  <td>{{ $key + 1 }} </td>
                  <td>{{ ucfirst($stock->stock_num) }}</td>
-                 <td>{{ !empty($brands[$stock->brand_id]) ? $brands[$stock->brand_id] : 'undefined'  }}</td>
+                 <td>{{ !empty($stock->brand_name) ? $stock->brand_name : 'no name'  }}</td>
                  <td>{{ !empty($categories[$stock->category_id]) ? substr($categories[$stock->category_id], 0, 15) . "..." : 'undefined'  }}</td>
                  <td>{{ !empty($generics[$stock->generic_id]) ? substr($generics[$stock->generic_id], 0, 15) . "..." : 'undefined'  }}</td>
                  <td>{{ !empty($suppliers[$stock->supplier_id]) ? $suppliers[$stock->supplier_id] : 'undefined'  }}</td>
