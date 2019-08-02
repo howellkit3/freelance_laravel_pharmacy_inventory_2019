@@ -19,6 +19,9 @@ class CreateStockQuantitiesTable extends Migration
             $table->integer('quantity');
             $table->dateTime('date_sold')->nullable();
             $table->smallInteger('type')->default(1);
+            $table->dateTime('expiry_date');
+            $table->decimal('unit_price', 8, 2);
+            $table->decimal('selling_price', 8, 2);
             $table->timestamps();
         });
     }

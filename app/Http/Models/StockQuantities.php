@@ -11,7 +11,7 @@ class StockQuantities extends Model
 	use Notifiable;
 
     protected $fillable = [
-         'id', 'stock_id','quantity','type','date_sold','created_by', 'updated_by'
+         'id', 'stock_id','quantity','type','date_sold','created_by', 'updated_by','expiry_date','selling_price','unit_price'
     ];
 
     protected $hidden = [

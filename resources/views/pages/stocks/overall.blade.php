@@ -251,6 +251,24 @@
                             </div>
                         </div><br><br>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label"> Unit Price</label>
+                            <div class="col-sm-9">
+                              <input type="number" min="0" step="any" value="{{$stock->unit_price}}" class="form-control"  name="unit_price" placeholder="Unit Price" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Selling Price</label>
+                            <div class="col-sm-9">
+                              <input type="number" min="0" step="any" value="{{$stock->selling_price}}" class="form-control"  name="selling_price" placeholder="Selling Price" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"> Expiry Date</label>
+                            <div class="col-sm-9">
+                              <input type="date" value="{{date('Y-m-d',strtotime($stock->expiry_date))}}" min=<?php echo date('Y-m-d');?> class="form-control"  name="expiry_date" placeholder="Expiry Date" required>
+                            </div>
+                        </div><br><br>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label"> Date Delivered</label>
                             <div class="col-sm-9">
                               <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">

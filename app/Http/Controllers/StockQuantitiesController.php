@@ -25,11 +25,17 @@ class StockQuantitiesController extends Controller
           'stocks_id' => 'required',
           'quantity' => 'required|integer|min:0',
           'date_sold' => 'required',
+          'unit_price' => 'required',
+          'selling_price' => 'required',
+          'expiry_date' => 'required',
         ]);
         $stock_quantity_form = $request->all();
         $stock_quantity_details['stock_id'] = $stock_quantity_form['stocks_id'];
         $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
         $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
+        $stock_quantity_details['unit_price'] = $stock_quantity_form['unit_price'];
+        $stock_quantity_details['selling_price'] = $stock_quantity_form['selling_price'];
+        $stock_quantity_details['expiry_date'] = $stock_quantity_form['expiry_date'];
 
         $StockQuantities = new StockQuantities;
         $isDuplicate = $StockQuantities->checkDuplicateQuantity($stock_quantity_details);
