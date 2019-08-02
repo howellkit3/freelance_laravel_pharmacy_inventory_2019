@@ -46,7 +46,7 @@ class Stocks extends Model
 														,'stocks.id as stocks_id', 'brands.name as brand_name')
 													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
 													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
-													->paginate(100);
+													->paginate(50);
 
 			return $StockDetails;
 		}

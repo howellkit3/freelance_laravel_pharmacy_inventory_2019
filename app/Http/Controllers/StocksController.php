@@ -134,6 +134,11 @@ class StocksController extends Controller
         $StockInfos = new StockInfos;
         $StockInfos->updateStockInfo($stock_info_details, $stock_form['stock_infos_id']);
       }
+
+      if (strpos($_SERVER['HTTP_REFERER'], 'stock_search')) {
+        return redirect()->route('stock_search')->with('success','Stock has been updated successfully!');
+      }
+
       return redirect()->route('stocks')->with('success','Stock has been updated successfully!');
     }
 
