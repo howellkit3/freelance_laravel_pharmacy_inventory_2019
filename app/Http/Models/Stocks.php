@@ -28,6 +28,17 @@ class Stocks extends Model
       return $StockDetails;
     }
 
+		public static function getStocksAll(){
+			$StockDetails = SELF::orderBy('brands.name', 'asc')
+													->where('stocks.status' , 1)
+													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
+													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
+													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
+													->get();
+
+			return $StockDetails;
+		}
+
 		public static function getStocksOverAll(){
 			$StockDetails = SELF::orderBy('brands.name', 'asc')
 													->where('stocks.status' , 1)
@@ -73,6 +84,14 @@ class Stocks extends Model
 			return $brand_list;
 		}
 
+		public static function getBrandListAll(){
+			$brand_list = DB::table('brands')
+					->orderBy('created_at', 'desc')
+					->pluck('name', 'id');
+
+			return $brand_list;
+		}
+
 		public static function getCategoryList(){
 			$category_list = DB::table('categories')
 					->orderBy('created_at', 'desc')
@@ -86,6 +105,14 @@ class Stocks extends Model
 			$generic_list = DB::table('generics')
 					->orderBy('created_at', 'desc')
 					->where('status', 1)
+					->pluck('name', 'id');
+
+			return $generic_list;
+		}
+
+		public static function getGenericListAll(){
+			$generic_list = DB::table('generics')
+					->orderBy('created_at', 'desc')
 					->pluck('name', 'id');
 
 			return $generic_list;
@@ -140,22 +167,16 @@ class Stocks extends Model
 		public static function getSearch($keyword){
 			$StockDetails = SELF::orderBy('stocks.id', 'desc')
 													->where('stocks.status' , 1)
-													->select('stocks.*','stock_infos.*','stock_infos.id as stock_infos_id', 'stocks.id as stocks_id')
+													->select('stocks.*',
+														'stock_infos.*',
+														'stock_infos.id as stock_infos_id',
+														'stocks.id as stocks_id',
+														'brands.name as brand_name')
 													->leftjoin('stock_infos', 'stocks.id', '=', 'stock_infos.stock_id')
 													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
 													->where('brands.name', 'like', '%'.$keyword.'%')
-													->paginate(50);
+													->paginate(10);
 
 			return $StockDetails;
 		}
 }
-
-// $reservation_list = SELF::orderBy('reservations.check_in', 'asc')
-// 		->select('reservations.id as reservation_id','reservations.check_in','reservations.check_out','reservation_rooms.id as reservation_rooms_id',
-// 				'reservations.created_at','reservation_rooms.head_count','reservations.reservation_num')
-// 		->join('reservation_rooms', 'reservation_rooms.reservation_id', '=', 'reservations.id')
-// 		->where('reservations.status' , 1)
-// 		->where('reservation_num', 'like', '%'.$reservation_num.'%')
-// 		->where('property_id', $property_id)
-// 		->whereDate('reservations.check_in', '>', Carbon::now())
-// 		->get();

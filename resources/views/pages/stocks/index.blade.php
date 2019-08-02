@@ -8,56 +8,6 @@
           Add Stock Item
           <i class="entypo-list-add"></i>
           </a>
-
-          <a href="" class="btn btn-default btn-icon" data-toggle="modal" data-target="#addStockSale">
-          Add Sale
-          <i class="entypo-list-add"></i>
-          </a>
-          <!-- Modal for Create -->
-          <div class="modal fade" id="addStockSale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <form method="POST" action="{{ route('stock.addSale') }} " id ="addSaleStock">
-                  {{ csrf_field() }}
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="addChargeModal">Add Sale</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group{{ $errors->has('stock_id') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label"> Stock Num</label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="stock_id" required>
-                            <option disabled>Select Stock Num</option>
-                            @foreach ($stockList as $key => $stock)
-                               <option value="{{$stock->stock_id}}">
-                                 {{ $stock->stock_num . ' : ' .  ucfirst($brands[$stock->brand_id]) .' - '. ucfirst($categories[$stock->category_id]) .' - '. $stock->size }}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                    </div><br><br>
-                    <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label"> Quantity</label>
-                        <div class="col-sm-9">
-                          <input type="number" class="form-control" name="quantity" placeholder="Quantity" required>
-                        </div>
-                    </div><br><br>
-                    <div class="form-group{{ $errors->has('date_sold') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label"> Date Sold</label>
-                        <div class="col-sm-9">
-                          <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
-                        </div>
-                    </div><br>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" form="addSaleStock" class="btn btn-info" onclick="return confirm('Are you sure about your input?');">Create</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <!-- End Modal for Create -->
           <!-- Modal for Create -->
           <div class="modal fade" id="addStockItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">

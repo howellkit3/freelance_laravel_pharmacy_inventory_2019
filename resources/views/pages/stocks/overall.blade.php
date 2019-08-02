@@ -28,15 +28,15 @@
           <thead>
              <tr>
                 <th>#</th>
-                <th>Stock Num</th>
+                <th>Stock#</th>
                 <th>Brand</th>
-                <th>Category</th>
+                <th>Ctgry</th>
                 <th>Generic</th>
                 <th>Supplier</th>
                 <th>Size</th>
                 <th>Unit Price</th>
                 <th>Selling Price</th>
-                <th>Quantity</th>
+                <th>Qty</th>
                 <th>Expiry Date</th>
                 <th>Actions</th>
              </tr>

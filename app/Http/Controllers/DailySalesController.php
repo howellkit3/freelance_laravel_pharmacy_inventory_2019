@@ -60,8 +60,13 @@ class DailySalesController extends Controller
 
     public function showReportPage()
     {
-      $StockQuantities = new StockQuantities;
       $Stocks = new Stocks;
+      $StockQuantities = new StockQuantities;
+      $stockList = $Stocks->getStocksAll();
+      $stockList = $StockQuantities->insertStockQuantity($stockList);
+      $brands = $Stocks->getBrandList();
+      $categories = $Stocks->getCategoryList();
+
       $dailySalesList = $StockQuantities->getSoldDates();
       $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
       $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
@@ -72,6 +77,6 @@ class DailySalesController extends Controller
       $Generics = new Generics;
       $genericList = $Generics->getAllGenerics();
 
-      return view('pages.daily_sales.sales_report',compact('dailySalesList', 'brandList', 'genericList'));
+      return view('pages.daily_sales.sales_report',compact('dailySalesList','categories','brands','stockList','brandList', 'genericList'));
     }
 }

@@ -33,8 +33,8 @@ class ExcelController extends Controller
       $dailySalesList = $StockQuantities->getSoldDates();
       $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
       $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
-      $brandList = $Stocks->getBrandList();
-      $genericList = $Stocks->getGenericList();
+      $brandList = $Stocks->getBrandListAll();
+      $genericList = $Stocks->getGenericListAll();
 
       return view('excel.daily_sales',compact('dailySalesList', 'brandList', 'genericList' ));
     }

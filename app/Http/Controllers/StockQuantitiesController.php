@@ -61,14 +61,15 @@ class StockQuantitiesController extends Controller
         $isValid = $StockQuantities->checkAvailStockQuantity($currentQuantity, $stock_quantity_form['quantity']);
 
         if(!$isValid && !empty($currentQuantity)) {
-          return redirect()->route('stocks')->with('error','Check Item Quantity');
+          return redirect()->route('sales_report')->with('error','Check Item Quantity');
         }
 
         if ($currentQuantity) {
           $stock_quantity_details['quantity'] = $currentQuantity->quantity + $stock_quantity_form['quantity'];
           $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
           $dailySalesList = $StockQuantities->updateQuantityToStock($stock_quantity_details, $currentQuantity->id);
-          return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
+
+          return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
         } else {
           $stock_quantity_details['stock_id'] = $stock_quantity_form['stock_id'];
           $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
@@ -79,9 +80,9 @@ class StockQuantitiesController extends Controller
 
           if(!empty($hasQuantity)) {
             $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
-            return redirect()->route('stocks')->with('success','Stock Quantity has been updated successfully!');
+            return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
           }else{
-            return redirect()->route('stocks')->with('error','There is no Stock for the Item');
+            return redirect()->route('sales_report')->with('error','There is no Stock for the Item');
           }
         }
       }
