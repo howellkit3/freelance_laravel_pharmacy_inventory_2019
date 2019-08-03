@@ -28,6 +28,58 @@ class StockQuantities extends Model
       return $StockQuantityDetails;
     }
 
+		public static function getStocksOverAll(){
+			$StockDetails = DB::table('stock_quantities')
+													->orderBy('brands.name', 'asc')
+													->select('stocks.*'
+																		// ,'stock_infos.*'
+																		// ,'stock_infos.id as stock_infos_id'
+																		// ,'stock_infos.expiry_date as st_expiry_date'
+																		// ,'stock_infos.unit_price as st_unit_price'
+																		// ,'stock_infos.selling_price as st_selling_price'
+																		,'stock_quantities.quantity as quantity'
+																		,'stock_quantities.id as st_id'
+																		,'stocks.id as stocks_id'
+																		,'brands.name as brand_name')
+													->leftjoin('stocks', 'stock_quantities.stock_id', '=', 'stocks.id')
+													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
+													//->leftjoin('stock_infos', 'stock_quantities.id', '=', 'stock_infos.stock_quantities_id')
+													->paginate(100);
+
+				foreach ($StockDetails as $key => $value) {
+
+					$hasQuantity = DB::table('stock_infos')
+														->where('stock_quantities_id', $value->st_id)
+														->first();
+
+					if(!empty($hasQuantity)) {
+						$quantityDetails = DB::table('stock_infos')
+															->where('stock_quantities_id', $value->st_id)
+															->first();
+						if(!empty($quantityDetails)) {
+							$StockDetails[$key]->expiry_date = $quantityDetails->expiry_date;
+							$StockDetails[$key]->unit_price = $quantityDetails->unit_price;
+							$StockDetails[$key]->selling_price = $quantityDetails->selling_price;
+							$StockDetails[$key]->stock_infos_id = $quantityDetails->id;
+							$StockDetails[$key]->lot_number = $quantityDetails->lot_number;
+						}
+					}else{
+						$quantityDetails = DB::table('stock_infos')
+															->where('stock_id', $value->stocks_id)
+															->first();
+						if(!empty($quantityDetails)) {
+							$StockDetails[$key]->expiry_date = $quantityDetails->expiry_date;
+							$StockDetails[$key]->unit_price = $quantityDetails->unit_price;
+							$StockDetails[$key]->selling_price = $quantityDetails->selling_price;
+							$StockDetails[$key]->stock_infos_id = $quantityDetails->id;
+							$StockDetails[$key]->lot_number = $quantityDetails->lot_number;
+						}
+					}
+				}
+
+			return $StockDetails;
+		}
+
 		public static function getSoldDates(){
 			$StockQuantityDetails = DB::table('stock_quantities')
 													->orderBy('stock_quantities.date_sold', 'desc')
@@ -67,12 +119,12 @@ class StockQuantities extends Model
 			foreach ($stocks as $key => $value) {
 
 				$adds = DB::table('stock_quantities')
-						->where('stock_id', $value->stocks_id)
+						->where('id', $value->st_id)
 						->where('type', 1)
 						->sum('quantity');
 
 				$subtracts = DB::table('stock_quantities')
-						->where('stock_id', $value->stocks_id)
+						->where('id', $value->st_id)
 						->where('type', 0)
 						->sum('quantity');
 

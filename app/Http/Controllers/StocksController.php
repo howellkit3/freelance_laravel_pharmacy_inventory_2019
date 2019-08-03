@@ -52,8 +52,13 @@ class StocksController extends Controller
 
     public function searchStock()
     {
-      $Stocks = new Stocks;
-      $stockList = $Stocks->getStocksOverAll();
+      $StockQuantities = new StockQuantities;
+      $stockList = $StockQuantities->getStocksOverAll();
+
+
+
+      // $Stocks = new Stocks;
+      // $stockList = $Stocks->getStocksOverAll();
 
       $Suppliers = new Suppliers;
       $suppliers = $Suppliers->getAllSuppliers();
@@ -67,8 +72,8 @@ class StocksController extends Controller
       $Generics = new Generics;
       $generics = $Generics->getAllGenerics();
 
-      $StockQuantities = new StockQuantities;
       $stockList = $StockQuantities->insertStockQuantity($stockList);
+      //print_r('<pre>'); print_r($stockList); print_r('<pre>'); exit;
 
       return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));
     }
