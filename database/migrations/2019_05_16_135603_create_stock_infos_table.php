@@ -16,6 +16,7 @@ class CreateStockInfosTable extends Migration
         Schema::create('stock_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('stock_id');
+            $table->integer('stock_quantities_id');
             $table->string('lot_number', 100);
             $table->dateTime('expiry_date');
             $table->decimal('unit_price', 8, 2);

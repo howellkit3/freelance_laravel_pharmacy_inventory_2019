@@ -10,7 +10,7 @@ class StockInfos extends Model
 	use Notifiable;
 
     protected $fillable = [
-    		'id', 'stock_id','lot_number','expiry_date','selling_price','unit_price'
+    		'id', 'stock_id','stock_quantities_id','lot_number','expiry_date','selling_price','unit_price'
     ];
 
 		public $timestamps = false;

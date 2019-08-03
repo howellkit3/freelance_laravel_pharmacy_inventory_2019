@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Models\StockInfos;
 use App\Http\Models\StockQuantities;
 use App\Http\Models\Stocks;
 
@@ -33,15 +34,22 @@ class StockQuantitiesController extends Controller
         $stock_quantity_details['stock_id'] = $stock_quantity_form['stocks_id'];
         $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
         $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
-        $stock_quantity_details['unit_price'] = $stock_quantity_form['unit_price'];
-        $stock_quantity_details['selling_price'] = $stock_quantity_form['selling_price'];
-        $stock_quantity_details['expiry_date'] = $stock_quantity_form['expiry_date'];
 
         $StockQuantities = new StockQuantities;
         $isDuplicate = $StockQuantities->checkDuplicateQuantity($stock_quantity_details);
 
         if(!$isDuplicate) {
-          $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
+          $stock_quantity_id = $StockQuantities->addQuantityToStock($stock_quantity_details);
+
+          $StockInfos = new StockInfos;
+          $stock_info_details['expiry_date'] = $stock_quantity_form['expiry_date'];
+          $stock_info_details['stock_id'] = $stock_quantity_form['stocks_id'];
+          $stock_info_details['unit_price'] = $stock_quantity_form['unit_price'];
+          $stock_info_details['selling_price'] = $stock_quantity_form['selling_price'];
+          $stock_info_details['lot_number'] = 0;
+          $stock_info_details['stock_quantities_id'] = $stock_quantity_id;
+
+          $dailySalesList = $StockInfos->addStockInfo($stock_info_details);
         }
 
         return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
