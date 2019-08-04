@@ -6,10 +6,10 @@
           Print Daily Sales
         <i class="entypo-list-add"></i>
         </a>
-        <a href="" class="btn btn-default btn-icon" data-toggle="modal" data-target="#addStockSale">
+        <!-- <a href="" class="btn btn-default btn-icon" data-toggle="modal" data-target="#addStockSale">
           Add Sale
         <i class="entypo-list-add"></i>
-        </a>
+        </a> -->
 
         <!-- Modal for Create -->
         <div class="modal fade" id="addStockSale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

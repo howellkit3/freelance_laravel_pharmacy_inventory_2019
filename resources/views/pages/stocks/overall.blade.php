@@ -46,7 +46,7 @@
               @if(!empty($stock->unit_price))
                 <tr>
                    <td>{{ $key + 1 }} </td>
-                   <td>{{ ucfirst($stock->newStockNum) }}</td>
+                   <td>{{ $stock->newStockNum }}</td>
                    <td>{{ !empty($stock->brand_name) ? $stock->brand_name : 'no name'  }}</td>
                    <td>{{ !empty($categories[$stock->category_id]) ? substr($categories[$stock->category_id], 0, 15) . "..." : 'undefined'  }}</td>
                    <td>{{ !empty($generics[$stock->generic_id]) ? substr($generics[$stock->generic_id], 0, 15) . "..." : 'undefined'  }}</td>
@@ -81,8 +81,53 @@
                     <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->st_id}}">
                        <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                      </a>
+                     <a href="#" data-toggle="modal" data-target="#add_sale{{$stock->st_id}}">
+                        <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                      </a>
                    </td>
                 </tr>
+
+                <!-- Modal for Create -->
+                <div class="modal fade" id="add_sale{{$stock->st_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <form method="POST" action="{{ route('stock.addSale') }} " id ="addSaleStock{{$stock->st_id}}">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{$stock->st_id}}" name="stock_quantity_id">
+                        <input type="hidden" value="{{$stock->quantity}}" name="orig_quantity">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="addChargeModal">Add Sale to {{ucfirst($stock->brand_name)}} ({{$stock->newStockNum}})</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                              <label class="col-sm-3 control-label">Current Qty</label>
+                              <div class="col-sm-9">
+                                 {{$stock->quantity}}
+                              </div>
+                          </div><br><br>
+                          <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                              <label class="col-sm-3 control-label"> Quantity</label>
+                              <div class="col-sm-9">
+                                <input type="number" min="1" max="{{$stock->quantity}}" class="form-control" name="quantity" placeholder="Quantity" required>
+                              </div>
+                          </div><br><br>
+                          <div class="form-group{{ $errors->has('date_sold') ? ' has-error' : '' }}">
+                              <label class="col-sm-3 control-label"> Date Sold</label>
+                              <div class="col-sm-9">
+                                <input type="date" name="date_sold" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                              </div>
+                          </div><br>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="submit" form="addSaleStock{{$stock->st_id}}" class="btn btn-info" onclick="return confirm('Are you sure about your input?');">Create</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Modal for Create -->
 
                 <!-- Modal for Update -->
                 <div class="modal fade" id="update_stock{{$stock->st_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

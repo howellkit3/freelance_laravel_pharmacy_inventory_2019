@@ -86,42 +86,49 @@ class StockQuantitiesController extends Controller
       if($request->has('_token')) {
         $stock_quantity_form = $request->all();
         $request->validate([
-          'stock_id' => 'required',
+          'stock_quantity_id' => 'required',
           'quantity' => 'required|integer|min:0',
           'date_sold' => 'required',
         ]);
 
         $stock_quantity_form = $request->all();
         $StockQuantities = new StockQuantities;
-        $currentQuantity = $StockQuantities->checkStockAndDateSold($stock_quantity_form);
 
-        $isValid = $StockQuantities->checkAvailStockQuantity($currentQuantity, $stock_quantity_form['quantity']);
+        $stock_quantity_details['quantity'] = $stock_quantity_form['orig_quantity'] - $stock_quantity_form['quantity'];
+        $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
+        $stock_quantity_details['id'] = $stock_quantity_form['stock_quantity_id'];
+        $dailySalesList = $StockQuantities->updateStockQuantity($stock_quantity_details);
 
-        if(!$isValid && !empty($currentQuantity)) {
-          return redirect()->route('sales_report')->with('error','Check Item Quantity');
-        }
+        return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
+        //$currentQuantity = $StockQuantities->checkStockAndDateSold($stock_quantity_form);
 
-        if ($currentQuantity) {
-          $stock_quantity_details['quantity'] = $currentQuantity->quantity + $stock_quantity_form['quantity'];
-          $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
-          $dailySalesList = $StockQuantities->updateQuantityToStock($stock_quantity_details, $currentQuantity->id);
+        //$isValid = $StockQuantities->checkAvailStockQuantity($currentQuantity, $stock_quantity_form['quantity']);
 
-          return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
-        } else {
-          $stock_quantity_details['stock_id'] = $stock_quantity_form['stock_id'];
-          $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
-          $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
-          $stock_quantity_details['type'] = 0;
+        // if(!$isValid && !empty($currentQuantity)) {
+        //   return redirect()->route('sales_report')->with('error','Check Item Quantity');
+        // }
 
-          $hasQuantity = $StockQuantities->checkIfHasQuantity($stock_quantity_details['stock_id']);
-
-          if(!empty($hasQuantity)) {
-            $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
-            return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
-          }else{
-            return redirect()->route('sales_report')->with('error','There is no Stock for the Item');
-          }
-        }
+        // if ($currentQuantity) {
+        //   $stock_quantity_details['quantity'] = $currentQuantity->quantity + $stock_quantity_form['quantity'];
+        //   $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
+        //   $dailySalesList = $StockQuantities->updateQuantityToStock($stock_quantity_details, $currentQuantity->id);
+        //
+        //   return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
+        // } else {
+        //   $stock_quantity_details['stock_id'] = $stock_quantity_form['stock_id'];
+        //   $stock_quantity_details['quantity'] = $stock_quantity_form['quantity'];
+        //   $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
+        //   $stock_quantity_details['type'] = 0;
+        //
+        //   $hasQuantity = $StockQuantities->checkIfHasQuantity($stock_quantity_details['stock_id']);
+        //
+        //   if(!empty($hasQuantity)) {
+        //     $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details);
+        //     return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
+        //   }else{
+        //     return redirect()->route('sales_report')->with('error','There is no Stock for the Item');
+        //   }
+        // }
       }
     }
 
