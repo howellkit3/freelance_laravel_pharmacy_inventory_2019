@@ -39,7 +39,7 @@
           <td>{{$value->unit_price}}</td>
           <td>{{$value->selling_price}}</td>
           <td>{{$value->expiry_date}}</td>
-          <td>{{$value->available}}</td>
+          <td>{{$value->quantity}}</td>
         </tr>
       @endif
     <?php } ?>

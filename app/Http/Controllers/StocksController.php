@@ -163,7 +163,7 @@ class StocksController extends Controller
         $keyword = $request->input('keyword');
         $Stocks = new Stocks;
         $StockQuantities = new StockQuantities;
-        $stockList = $StockQuantities->getStocksOverAll(5, 'stocks', $keyword);
+        $stockList = $StockQuantities->getStocksOverAll(20, 'stocks', $keyword);
 
         $Suppliers = new Suppliers;
         $suppliers = $Suppliers->getAllSuppliers();
