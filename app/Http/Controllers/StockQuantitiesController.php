@@ -38,6 +38,26 @@ class StockQuantitiesController extends Controller
         $StockQuantities = new StockQuantities;
         $isDuplicate = $StockQuantities->checkDuplicateQuantity($stock_quantity_details);
 
+        $stock_stock_details['unit_price'] = $stock_quantity_form['unit_price'];
+        $stock_stock_details['selling_price'] = $stock_quantity_form['selling_price'];
+        $stock_stock_details['expiry_date'] = $stock_quantity_form['expiry_date'];
+        $stock_stock_details['stocks_quantity_id'] = $stock_quantity_form['stocks_quantity_id'];
+        $stock_stock_details['stocks_info_id'] = $stock_quantity_form['stocks_info_id'];
+        $isStockExist = $StockQuantities->checkStockDetails($stock_stock_details);
+
+        if(!$isStockExist) {
+          $stock_stock_quantity['quantity']  = $stock_quantity_form['orig_quantity'] + $stock_quantity_form['quantity'];
+          $stock_stock_quantity['id']  = $stock_quantity_form['stocks_quantity_id'];
+
+          $isSuccessQuantityUpdate = $StockQuantities->updateStockQuantity($stock_stock_quantity);
+
+          if($isSuccessQuantityUpdate) {
+            return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
+          } else {
+            return redirect()->route('stock_search')->with('error','Quantity has not been added!');
+          }
+        }
+
         if(!$isDuplicate) {
           $stock_quantity_id = $StockQuantities->addQuantityToStock($stock_quantity_details);
 
@@ -50,9 +70,12 @@ class StockQuantitiesController extends Controller
           $stock_info_details['stock_quantities_id'] = $stock_quantity_id;
 
           $dailySalesList = $StockInfos->addStockInfo($stock_info_details);
+          return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
         }
 
-        return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
+        if($isDuplicate && $isStockExist) {
+          return redirect()->route('stock_search')->with('error','Something got wrong in your input! Check if the data is duplicated');
+        }
       } else {
         return view('pages.daily_sales.index',compact('dailySalesList', 'brandList', 'categoryList','stockList'));
       }

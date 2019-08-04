@@ -72,23 +72,23 @@
                   <td>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
                   @endif
                    <td>
-                     <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->stocks_id}}">
+                     <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->st_id}}">
                         <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
                     </a>
-                    <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->stocks_id}}">
+                    <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->st_id}}">
                        <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
                      </a>
-                    <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->stocks_id}}">
+                    <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->st_id}}">
                        <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                      </a>
                    </td>
                 </tr>
 
                 <!-- Modal for Update -->
-                <div class="modal fade" id="update_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="update_stock{{$stock->st_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <form method="POST" action="{{ route('stock.update') }}" id ="updateStockForm{{$stock->stocks_id}}">
+                      <form method="POST" action="{{ route('stock.update') }}" id ="updateStockForm{{$stock->st_id}}">
                         <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
                         <input type="hidden" value="{{$stock->stock_infos_id}}" name="stock_infos_id">
                         {{ csrf_field() }}
@@ -196,7 +196,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="submit" form="updateStockForm{{$stock->stocks_id}}" class="btn btn-info">Save changes</button>
+                          <button type="submit" form="updateStockForm{{$stock->st_id}}" class="btn btn-info">Save changes</button>
                         </div>
                       </form>
                     </div>
@@ -205,10 +205,10 @@
                 <!-- End Modal for Update -->
 
                 <!-- Modal for Remove -->
-                <div class="modal fade" id="remove_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="remove_stock{{$stock->st_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <form method="POST" action="{{ route('stock.delete') }}" id ="removeStockForm{{$stock->stocks_id}}">
+                      <form method="POST" action="{{ route('stock.delete') }}" id ="removeStockForm{{$stock->st_id}}">
                         <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
                         <input type="hidden" value="{{$stock->stock_infos_id}}" name="stock_infos_id">
                         <input type="hidden" value="{{$stock->st_id}}" name="stock_quantity_id">
@@ -219,7 +219,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="submit" form="removeStockForm{{$stock->stocks_id}}" class="btn btn-warning">Remove</button>
+                          <button type="submit" form="removeStockForm{{$stock->st_id}}" class="btn btn-warning">Remove</button>
                         </div>
                       </form>
                     </div>
@@ -227,13 +227,16 @@
                 </div>
                 <!-- End Modal for Update -->
 
-
                 <!-- Modal for Add Stock -->
-                <div class="modal fade" id="add_stock{{$stock->stocks_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="add_stock{{$stock->st_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <form method="POST" action="{{ route('stock.addQuantity') }}" id ="addStockForm{{$stock->stocks_id}}">
+                      <form method="POST" action="{{ route('stock.addQuantity') }}" id ="addStockForm{{$stock->st_id}}">
                         <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
+                        <input type="hidden" value="{{$stock->st_id}}" name="stocks_quantity_id">
+                        <input type="hidden" value="{{$stock->quantity}}" name="orig_quantity">
+                        <input type="hidden" value="{{$stock->stock_infos_id}}" name="stocks_info_id">
+
                         {{ csrf_field() }}
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -279,7 +282,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="submit" form="addStockForm{{$stock->stocks_id}}" class="btn btn-info">Add to Quantity</button>
+                          <button type="submit" form="addStockForm{{$stock->st_id}}" class="btn btn-info">Add to Quantity</button>
                         </div>
                       </form>
                     </div>

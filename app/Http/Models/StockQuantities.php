@@ -126,6 +126,25 @@ class StockQuantities extends Model
 			return false;
 		}
 
+
+		public function checkStockDetails($stock_quantity_details)
+		{
+
+			$isAlreadyExist = DB::table('stock_infos')
+					->where('stock_infos.unit_price', $stock_quantity_details['unit_price'])
+					->where('stock_infos.expiry_date', $stock_quantity_details['expiry_date'])
+					->where('stock_infos.selling_price', $stock_quantity_details['selling_price'])
+					->where('stock_infos.id', $stock_quantity_details['stocks_info_id'])
+					//->where('stock_infos.stock_quantities_id', $stock_quantity_details['stocks_quantity_id'])
+					->first();
+
+			if(empty($isAlreadyExist)) {
+				return true;
+			}
+
+			return false;
+		}
+
 		public function insertStockQuantity($stocks)
 		{
 			foreach ($stocks as $key => $value) {
@@ -222,10 +241,15 @@ class StockQuantities extends Model
 
 		public function updateQuantityToStock($quantity_form, $id)
 		{
-
 			SELF::where('id',  $id)
 						->where('type',  0)
 						->update($quantity_form);
+			return 1;
+		}
+
+		public function updateStockQuantity($quantity_form)
+		{
+			SELF::where('id','=', $quantity_form['id'])->update($quantity_form);
 			return 1;
 		}
 
