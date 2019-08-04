@@ -28,26 +28,28 @@ class StockQuantities extends Model
       return $StockQuantityDetails;
     }
 
-		public static function getStocksOverAll(){
+		public static function getStocksOverAll($number, $page){
+
+			if ($page == 'overall') {
+				$columnSort = 'brands.name';
+				$columnOrder = 'asc';
+			} else {
+				$columnSort = 'stock_quantities.id';
+				$columnOrder = 'desc';
+			}
+
 			$StockDetails = DB::table('stock_quantities')
-													->orderBy('brands.name', 'asc')
+													->orderBy($columnSort, $columnOrder)
 													->select('stocks.*'
-																		// ,'stock_infos.*'
-																		// ,'stock_infos.id as stock_infos_id'
-																		// ,'stock_infos.expiry_date as st_expiry_date'
-																		// ,'stock_infos.unit_price as st_unit_price'
-																		// ,'stock_infos.selling_price as st_selling_price'
 																		,'stock_quantities.quantity as quantity'
 																		,'stock_quantities.id as st_id'
 																		,'stocks.id as stocks_id'
 																		,'brands.name as brand_name')
 													->leftjoin('stocks', 'stock_quantities.stock_id', '=', 'stocks.id')
 													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
-													//->leftjoin('stock_infos', 'stock_quantities.id', '=', 'stock_infos.stock_quantities_id')
-													->paginate(100);
+													->paginate($number);
 
 				foreach ($StockDetails as $key => $value) {
-
 					$hasQuantity = DB::table('stock_infos')
 														->where('stock_quantities_id', $value->st_id)
 														->first();
@@ -104,7 +106,6 @@ class StockQuantities extends Model
 					->where('stock_id', $stock_quantity_details['stock_id'])
 					->where('quantity', $stock_quantity_details['quantity'])
 					->where('date_sold', $stock_quantity_details['date_sold'])
-					//->where('created_at', Carbon::now()->toDateTimeString())
 					->first();
 
 			if(!empty($isAlreadyExist)) {

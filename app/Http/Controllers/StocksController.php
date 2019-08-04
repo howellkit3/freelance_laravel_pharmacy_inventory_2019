@@ -13,11 +13,6 @@ use App\Http\Models\Suppliers;
 
 class StocksController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -26,13 +21,13 @@ class StocksController extends Controller
     public function stocks()
     {
       $Stocks = new Stocks;
-      $stockList = $Stocks->getStocks();
+      $StockQuantities = new StockQuantities;
+      $stockList = $StockQuantities->getStocksOverAll(5, 'stocks');
       $suppliers = $Stocks->getSupplierList();
       $brands = $Stocks->getBrandList();
       $categories = $Stocks->getCategoryList();
       $generics = $Stocks->getGenericList();
 
-      $StockQuantities = new StockQuantities;
       $stockList = $StockQuantities->insertStockQuantity($stockList);
 
       $Brands = new Brands;
@@ -53,12 +48,9 @@ class StocksController extends Controller
     public function searchStock()
     {
       $StockQuantities = new StockQuantities;
-      $stockList = $StockQuantities->getStocksOverAll();
+      $stockList = $StockQuantities->getStocksOverAll(50, 'overall');
 
-
-
-      // $Stocks = new Stocks;
-      // $stockList = $Stocks->getStocksOverAll();
+    //  print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit;
 
       $Suppliers = new Suppliers;
       $suppliers = $Suppliers->getAllSuppliers();
@@ -73,7 +65,6 @@ class StocksController extends Controller
       $generics = $Generics->getAllGenerics();
 
       $stockList = $StockQuantities->insertStockQuantity($stockList);
-      //print_r('<pre>'); print_r($stockList); print_r('<pre>'); exit;
 
       return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));
     }
