@@ -50,8 +50,6 @@ class StocksController extends Controller
       $StockQuantities = new StockQuantities;
       $stockList = $StockQuantities->getStocksOverAll(50, 'overall');
 
-    //  print_r('<pre>'); print_r($stockList); print_r('</pre>'); exit;
-
       $Suppliers = new Suppliers;
       $suppliers = $Suppliers->getAllSuppliers();
 
@@ -77,7 +75,9 @@ class StocksController extends Controller
           'category_id' => 'required',
           'generic_id' => 'required',
           'supplier_id' => 'required',
+          'quantity' => 'required',
         ]);
+
         $stock_form = $request->all();
         $stock_details['stock_num'] = mt_rand(1,10000000);
         $stock_details['brand_id'] = $stock_form['brand_id'];
@@ -92,7 +92,6 @@ class StocksController extends Controller
 
         if(!$isDuplicate) {
           $stock_id = $Stocks->addStock($stock_details);
-
           $stock_info_details['stock_id'] = $stock_id;
           $stock_info_details['lot_number'] = $stock_form['lot_number'];
           $stock_info_details['expiry_date'] = date('Y-m-d', strtotime($stock_form['expiry_date']));
@@ -101,6 +100,14 @@ class StocksController extends Controller
 
           $StockInfos = new StockInfos;
           $StockInfos->addStockInfo($stock_info_details);
+
+          $stock_quantity_details['stock_id'] = $stock_id;
+          $stock_quantity_details['quantity'] = $stock_form['quantity'];
+          $stock_quantity_details['type'] = 1;
+
+          $StockQuantities = new StockQuantities;
+          $StockQuantities->addQuantityToStock($stock_quantity_details);
+
         } else {
           return redirect()->route('stocks')->with('error','The Stock you created already Exist');
         }
@@ -131,22 +138,11 @@ class StocksController extends Controller
         $StockInfos->updateStockInfo($stock_info_details, $stock_form['stock_infos_id']);
       }
 
-      if (strpos($_SERVER['HTTP_REFERER'], 'stock_search')) {
+      if (strpos($_SERVER['HTTP_REFERER'], 'stock_search') || strpos($_SERVER['HTTP_REFERER'], 'search_stock')) {
         return redirect()->route('stock_search')->with('success','Stock has been updated successfully!');
       }
 
       return redirect()->route('stocks')->with('success','Stock has been updated successfully!');
-    }
-
-    public function deleteStock(Request $request)
-    {
-      if($request->has('_token')) {
-        $stock_form = $request->all();
-        $stock_details['status'] = 0;
-        $Stocks = new Stocks;
-        $stock_id = $Stocks->updateStock($stock_details, $stock_form['stocks_id']);
-      }
-      return redirect()->route('stock_search')->with('success','Stock has been removed successfully!');
     }
 
     public function deleteSupplier(Request $request)
@@ -166,7 +162,8 @@ class StocksController extends Controller
     {
         $keyword = $request->input('keyword');
         $Stocks = new Stocks;
-        $stockList = $Stocks->getSearch($keyword);
+        $StockQuantities = new StockQuantities;
+        $stockList = $StockQuantities->getStocksOverAll(5, 'stocks', $keyword);
 
         $Suppliers = new Suppliers;
         $suppliers = $Suppliers->getAllSuppliers();
@@ -180,7 +177,6 @@ class StocksController extends Controller
         $Generics = new Generics;
         $generics = $Generics->getAllGenerics();
 
-        $StockQuantities = new StockQuantities;
         $stockList = $StockQuantities->insertStockQuantity($stockList);
 
         return view('pages.stocks.overall',compact('stockList','brands','generics','categories','suppliers'));

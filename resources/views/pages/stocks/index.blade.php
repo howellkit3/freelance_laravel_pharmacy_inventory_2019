@@ -63,6 +63,12 @@
                           </select>
                         </div>
                     </div><br><br>
+                    <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label"> Quantity</label>
+                        <div class="col-sm-9">
+                          <input type="number" min="0" class="form-control"  name="quantity" placeholder="Quantity" required>
+                        </div>
+                    </div><br><br>
                     <div class="form-group{{ $errors->has('size') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label"> Size</label>
                         <div class="col-sm-9">
@@ -127,7 +133,7 @@
             <?php foreach ($stockList as $key => $stock) { ?>
               <tr>
                  <td>{{ $key + 1 }} </td>
-                 <td>{{ ucfirst($stock->stock_num) }}</td>
+                 <td>{{ $stock->newStockNum }}</td>
                  <td>{{ !empty($brands[$stock->brand_id]) ? $brands[$stock->brand_id] : 'undefined'  }}</td>
                  <td>{{ !empty($categories[$stock->category_id]) ? substr($categories[$stock->category_id], 0, 15) . "..." : 'undefined'  }}</td>
                  <td>{{ !empty($generics[$stock->generic_id]) ? substr($generics[$stock->generic_id], 0, 15) . "..." : 'undefined'  }}</td>

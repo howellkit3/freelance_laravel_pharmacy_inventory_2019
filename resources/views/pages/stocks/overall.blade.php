@@ -46,7 +46,7 @@
               @if(!empty($stock->unit_price))
                 <tr>
                    <td>{{ $key + 1 }} </td>
-                   <td>{{ ucfirst($stock->stock_num) }}</td>
+                   <td>{{ ucfirst($stock->newStockNum) }}</td>
                    <td>{{ !empty($stock->brand_name) ? $stock->brand_name : 'no name'  }}</td>
                    <td>{{ !empty($categories[$stock->category_id]) ? substr($categories[$stock->category_id], 0, 15) . "..." : 'undefined'  }}</td>
                    <td>{{ !empty($generics[$stock->generic_id]) ? substr($generics[$stock->generic_id], 0, 15) . "..." : 'undefined'  }}</td>
@@ -211,6 +211,7 @@
                       <form method="POST" action="{{ route('stock.delete') }}" id ="removeStockForm{{$stock->stocks_id}}">
                         <input type="hidden" value="{{$stock->stocks_id}}" name="stocks_id">
                         <input type="hidden" value="{{$stock->stock_infos_id}}" name="stock_infos_id">
+                        <input type="hidden" value="{{$stock->st_id}}" name="stock_quantity_id">
                         {{ csrf_field() }}
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

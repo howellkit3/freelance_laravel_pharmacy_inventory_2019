@@ -27,19 +27,21 @@
   </thead>
   <tbody>
     <?php foreach ($stockList as $key => $value) { ?>
-      <tr>
-        <td>{{$key + 1}}</td>
-        <td>{{$value->stock_num}}</td>
-        <td>{{$value->brand_name}}</td>
-        <td>{{$value->category_name}}</td>
-        <td>{{$value->generic_name}}</td>
-        <td>{{$value->supplier_name}}</td>
-        <td>{{$value->size}}</td>
-        <td>{{$value->unit_price}}</td>
-        <td>{{$value->selling_price}}</td>
-        <td>{{$value->expiry_date}}</td>
-        <td>{{$value->available}}</td>
-      </tr>
+      @if(!empty($value->unit_price))
+        <tr>
+          <td>{{$key + 1}}</td>
+          <td>{{$value->newStockNum}}</td>
+          <td>{{ !empty($brands[$value->brand_id]) ? $brands[$value->brand_id] : 'undefined'  }}</td>
+          <td>{{ !empty($categories[$value->category_id]) ? $categories[$value->category_id] : 'undefined'  }}</td>
+          <td>{{ !empty($generics[$value->generic_id]) ? $generics[$value->generic_id] : 'undefined'  }}</td>
+          <td>{{ !empty($suppliers[$value->supplier_id]) ? $suppliers[$value->supplier_id] : 'undefined'  }}</td>
+          <td>{{$value->size}}</td>
+          <td>{{$value->unit_price}}</td>
+          <td>{{$value->selling_price}}</td>
+          <td>{{$value->expiry_date}}</td>
+          <td>{{$value->available}}</td>
+        </tr>
+      @endif
     <?php } ?>
   </tbdody>
 </table>

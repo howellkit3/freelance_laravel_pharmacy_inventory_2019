@@ -11,7 +11,7 @@ class StockQuantities extends Model
 	use Notifiable;
 
     protected $fillable = [
-         'id', 'stock_id','quantity','type','date_sold','created_by', 'updated_by'
+         'id', 'stock_id','quantity','type','date_sold','created_by', 'updated_by','status'
     ];
 
     protected $hidden = [
@@ -28,7 +28,7 @@ class StockQuantities extends Model
       return $StockQuantityDetails;
     }
 
-		public static function getStocksOverAll($number, $page){
+		public static function getStocksOverAll($number, $page, $keyword = null){
 
 			if ($page == 'overall') {
 				$columnSort = 'brands.name';
@@ -47,9 +47,16 @@ class StockQuantities extends Model
 																		,'brands.name as brand_name')
 													->leftjoin('stocks', 'stock_quantities.stock_id', '=', 'stocks.id')
 													->leftjoin('brands', 'stocks.brand_id', '=', 'brands.id')
+													->where('brands.name', 'like', '%'.$keyword.'%')
+													->where('stocks.status', 1)
+													->where('stock_quantities.status', 1)
 													->paginate($number);
 
 				foreach ($StockDetails as $key => $value) {
+
+					$stockNum = self::generateStockNum($value);
+					$StockDetails[$key]->newStockNum = $stockNum;
+
 					$hasQuantity = DB::table('stock_infos')
 														->where('stock_quantities_id', $value->st_id)
 														->first();
@@ -78,8 +85,12 @@ class StockQuantities extends Model
 						}
 					}
 				}
-
 			return $StockDetails;
+		}
+
+		public static function generateStockNum($stockDetails){
+			$stockNum = $stockDetails->stock_num . '-' . str_pad($stockDetails->st_id, 4, '0', STR_PAD_LEFT);
+			return $stockNum;
 		}
 
 		public static function getSoldDates(){
@@ -249,5 +260,11 @@ class StockQuantities extends Model
 			}
 
 			return $dailySalesList;
+		}
+
+		public function updateStock($stock_details, $id)
+		{
+			SELF::where('id','=', $id)->update($stock_details);
+			return 1;
 		}
 }

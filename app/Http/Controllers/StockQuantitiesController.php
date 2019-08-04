@@ -102,8 +102,14 @@ class StockQuantitiesController extends Controller
       }
     }
 
-    public function insertStockQuantity($stockList)
+    public function deleteStock(Request $request)
     {
-      print_r($stockList); exit;
+      if($request->has('_token')) {
+        $stock_form = $request->all();
+        $stock_details['status'] = 0;
+        $StockQuantities = new StockQuantities;
+        $stock_id = $StockQuantities->updateStock($stock_details, $stock_form['stock_quantity_id']);
+      }
+      return redirect()->route('stock_search')->with('success','Stock has been removed successfully!');
     }
 }
