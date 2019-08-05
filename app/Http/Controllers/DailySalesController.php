@@ -10,21 +10,11 @@ use App\Http\Models\Generics;
 
 class DailySalesController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function showStockQuantities()
     {
       $StockQuantities = new StockQuantities;
@@ -68,7 +58,6 @@ class DailySalesController extends Controller
       $categories = $Stocks->getCategoryList();
 
       $dailySalesList = $StockQuantities->getSoldDates();
-    //  $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
       $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
 
       $Brands = new Brands;

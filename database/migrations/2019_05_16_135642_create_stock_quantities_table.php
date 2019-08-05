@@ -18,6 +18,7 @@ class CreateStockQuantitiesTable extends Migration
             $table->integer('stock_id');
             $table->integer('quantity');
             $table->dateTime('date_sold')->nullable();
+            $table->integer('from_qty_id')->nullable();
             $table->smallInteger('type')->default(1);
             $table->smallInteger('status')->default(1);
             $table->timestamps();

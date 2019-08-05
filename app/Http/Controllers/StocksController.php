@@ -48,6 +48,7 @@ class StocksController extends Controller
     public function searchStock()
     {
       $StockQuantities = new StockQuantities;
+      //$StockQuantities->addValueToStockQuantitiesID();
       $stockList = $StockQuantities->getStocksOverAll(50, 'overall');
 
       $Suppliers = new Suppliers;

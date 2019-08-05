@@ -11,7 +11,15 @@ class StockQuantities extends Model
 	use Notifiable;
 
     protected $fillable = [
-         'id', 'stock_id','quantity','type','date_sold','created_by', 'updated_by','status'
+         'id',
+				 'stock_id',
+				 'quantity',
+				 'type',
+				 'date_sold',
+				 'from_qty_id',
+				 'created_by',
+				 'updated_by',
+				 'status'
     ];
 
     protected $hidden = [
@@ -28,6 +36,30 @@ class StockQuantities extends Model
       return $StockQuantityDetails;
     }
 
+		public static function addValueToStockQuantitiesID() {
+			$StockDetails = DB::table('stock_infos')
+				->select(
+									'stock_infos.id as stock_info_id'
+									,'stock_infos.stock_id as stock_info_stock_id'
+									,'stock_infos.stock_quantities_id as stock_quantities_id'
+									,'stocks.id as stocks_id'
+									,'stock_quantities.id as stock_quantity_id')
+				->leftjoin('stocks', 'stock_infos.stock_id', '=', 'stocks.id')
+				->leftjoin('stock_quantities', 'stock_quantities.stock_id', '=', 'stocks.id')
+				->where('stock_infos.stock_quantities_id', 0)
+				//->limit(10)
+				->get();
+				//print_r('<pre>'); print_r($StockDetails); print_r('</pre>'); exit;
+				foreach ($StockDetails as $key => $value) {
+					if(!empty($value->stock_quantity_id)) {
+						DB::table('stock_infos')
+							->where('id',  $value->stock_info_id)
+							->where('stock_quantities_id',  0)
+							->update(array('stock_quantities_id' => $value->stock_quantity_id));
+						}
+				}
+		}
+
 		public static function getStocksOverAll($number, $page, $keyword = null){
 
 			if ($page == 'overall') {
@@ -43,6 +75,8 @@ class StockQuantities extends Model
 													->select('stocks.*'
 																		,'stock_quantities.quantity as quantity'
 																		,'stock_quantities.id as st_id'
+																		,'stock_quantities.type'
+																		,'stock_quantities.from_qty_id'
 																		,'stocks.id as stocks_id'
 																		,'brands.name as brand_name')
 													->leftjoin('stocks', 'stock_quantities.stock_id', '=', 'stocks.id')
@@ -50,6 +84,7 @@ class StockQuantities extends Model
 													->where('brands.name', 'like', '%'.$keyword.'%')
 													->where('stocks.status', 1)
 													->where('stock_quantities.status', 1)
+													->where('stock_quantities.type', 1)
 													->paginate($number);
 
 				foreach ($StockDetails as $key => $value) {
@@ -89,22 +124,21 @@ class StockQuantities extends Model
 		}
 
 		public static function generateStockNum($stockDetails){
-			$quantity_id = !empty($stockDetails->st_id) ? $stockDetails->st_id : $stockDetails->stock_quantities_id;
+			$quantity_id = (empty($stockDetails->from_qty_id)) ? $stockDetails->st_id : $stockDetails->from_qty_id;
 			$stockNum = $stockDetails->stock_num . '-' . str_pad($quantity_id, 4, '0', STR_PAD_LEFT);
 			return $stockNum;
 		}
 
 		public static function getSoldDates(){
 			$StockQuantityDetails = DB::table('stock_quantities')
-					->orderBy('stock_quantities.date_sold', 'desc')
+					->orderBy('stock_quantities.id', 'desc')
 					->select('stocks.*'
-									,'stock_quantities.*'
-									,'stock_quantities.id as stock_quantities_id'
-									,'stocks.id as stocks_id'
-									,'stock_infos.*'
-									)
+										,'stock_quantities.*'
+										,'stock_quantities.id as st_id'
+										,'stocks.id as stocks_id'
+										,'stock_infos.*')
 					->leftjoin('stocks', 'stocks.id', '=', 'stock_quantities.stock_id')
-					->leftjoin('stock_infos', 'stock_infos.stock_quantities_id', '=', 'stock_quantities.id')
+					->leftjoin('stock_infos', 'stock_infos.stock_quantities_id', '=', 'stock_quantities.from_qty_id')
 					->where('stock_quantities.type', 0)
 					->where('stock_quantities.status', 1)
 					->paginate(50);

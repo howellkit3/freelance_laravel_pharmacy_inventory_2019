@@ -81,9 +81,11 @@
                     <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->st_id}}">
                        <button type="button" class="btn btn-danger btn-xs action-button"><span class="glyphicon glyphicon-remove"></span></button>
                      </a>
+                     @if($stock->quantity > 0)
                      <a href="#" data-toggle="modal" data-target="#add_sale{{$stock->st_id}}">
                         <button type="button" class="btn btn-warning btn-xs action-button"><span class="glyphicon glyphicon-shopping-cart"></span></button>
                       </a>
+                      @endif
                    </td>
                 </tr>
 
@@ -95,6 +97,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" value="{{$stock->st_id}}" name="stock_quantity_id">
                         <input type="hidden" value="{{$stock->quantity}}" name="orig_quantity">
+                        <input type="hidden" value="{{$stock->stocks_id}}" name="stock_id">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h4 class="modal-title" id="addChargeModal">Add Sale to {{ucfirst($stock->brand_name)}} ({{$stock->newStockNum}})</h4>

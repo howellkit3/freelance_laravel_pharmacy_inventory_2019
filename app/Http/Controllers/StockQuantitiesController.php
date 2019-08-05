@@ -9,11 +9,6 @@ use App\Http\Models\Stocks;
 
 class StockQuantitiesController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -98,6 +93,22 @@ class StockQuantitiesController extends Controller
         $stock_quantity_details['date_sold'] = $stock_quantity_form['date_sold'];
         $stock_quantity_details['id'] = $stock_quantity_form['stock_quantity_id'];
         $dailySalesList = $StockQuantities->updateStockQuantity($stock_quantity_details);
+
+        $stock_quantity_details_to_add['stock_id'] = $stock_quantity_form['stock_id'];
+        $stock_quantity_details_to_add['quantity'] = $stock_quantity_form['quantity'];
+        $stock_quantity_details_to_add['date_sold'] = $stock_quantity_form['date_sold'];
+        $stock_quantity_details_to_add['from_qty_id'] = $stock_quantity_form['stock_quantity_id'];
+        $stock_quantity_details_to_add['type'] = 0;
+        $stock_quantity_details_to_add['status'] = 1;
+
+        $hasQuantity = $StockQuantities->checkIfHasQuantity($stock_quantity_details_to_add['stock_id']);
+
+        if(!empty($hasQuantity)) {
+          $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details_to_add);
+          return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
+        }else{
+          return redirect()->route('sales_report')->with('error','There is no Stock for the Item');
+        }
 
         return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
         //$currentQuantity = $StockQuantities->checkStockAndDateSold($stock_quantity_form);
