@@ -179,3 +179,7 @@ a.article, a.article:hover {
 #user-logout-before[aria-expanded="true"]  {
   background: white;
 }
+
+.action-button {
+  margin-bottom: 2px;
+}

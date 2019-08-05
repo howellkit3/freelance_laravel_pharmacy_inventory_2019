@@ -68,7 +68,7 @@ class DailySalesController extends Controller
       $categories = $Stocks->getCategoryList();
 
       $dailySalesList = $StockQuantities->getSoldDates();
-      $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
+    //  $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
       $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
 
       $Brands = new Brands;

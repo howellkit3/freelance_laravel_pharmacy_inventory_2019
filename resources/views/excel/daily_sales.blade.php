@@ -18,29 +18,27 @@
       <th>Brand</th>
       <th>Generic</th>
       <th>Size</th>
-      <th>Quantity Sold</th>
+      <th>Expiration</th>
+      <th>Qty Sold</th>
       <th>Unit Price</th>
       <th>Selling Price</th>
       <th>Profit</th>
-      <th>Profit</th>
-      <th>Balance Available</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($dailySalesList as $key => $dailySales) { ?>
       <tr>
-         <td>{{ $key + 1 }}</td>
-         <td>{{ date('Y-m-d', strtotime($dailySales->date_sold)) }}</td>
-         <td>{{ $dailySales->stock_num }}</td>
-         <td>{{ ucfirst($brandList[$dailySales->brand_id]) }}</td>
-         <td>{{ ucfirst($genericList[$dailySales->category_id]) }}</td>
-         <td>{{ $dailySales->size }}</td>
-         <td>{{ $dailySales->quantity }}</td>
-         <td>{{ $dailySales->unit_price }}</td>
-         <td>{{ $dailySales->selling_price }}</td>
-         <td>{{ $dailySales->profit }}</td>
-         <th>{{ $dailySales->substractions }}</th>
-         <td>{{ $dailySales->available_stock }}</td>
+        <td>{{ $key + 1 }}</td>
+        <td>{{ date('Y-m-d', strtotime($dailySales->date_sold)) }}</td>
+        <td>{{ $dailySales->newStockNum }}</td>
+        <td>{{ ucfirst($brandList[$dailySales->brand_id]) }}</td>
+        <td>{{ ucfirst($genericList[$dailySales->category_id]) }}</td>
+        <td>{{ $dailySales->size }}</td>
+        <td>{{ date('Y-m-d', strtotime($dailySales->expiry_date)) }}</td>
+        <td>{{ $dailySales->quantity }}</td>
+        <td>{{ $dailySales->unit_price }}</td>
+        <td>{{ $dailySales->selling_price }}</td>
+        <td>{{ $dailySales->profit }}</td>
       </tr>
     <?php } ?>
   </tbdody>

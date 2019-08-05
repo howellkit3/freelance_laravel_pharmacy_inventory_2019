@@ -50,7 +50,6 @@ class ExcelController extends Controller
       $StockQuantities = new StockQuantities;
       $Stocks = new Stocks;
       $dailySalesList = $StockQuantities->getSoldDates();
-      $dailySalesList = $StockQuantities->getStockQuantityByDate($dailySalesList);
       $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
       $brandList = $Stocks->getBrandListAll();
       $genericList = $Stocks->getGenericListAll();

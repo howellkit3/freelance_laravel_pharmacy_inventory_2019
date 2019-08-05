@@ -73,16 +73,16 @@
                   @endif
                    <td>
                      <a href="#" data-toggle="modal" data-target="#update_stock{{$stock->st_id}}">
-                        <button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button type="button" class="btn btn-info btn-xs action-button"><span class="glyphicon glyphicon-pencil"></span></button>
                     </a>
                     <a href="#" data-toggle="modal" data-target="#add_stock{{$stock->st_id}}">
-                       <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                       <button type="button" class="btn btn-success btn-xs action-button"><span class="glyphicon glyphicon-plus"></span></button>
                      </a>
                     <a href="#" data-toggle="modal" data-target="#remove_stock{{$stock->st_id}}">
-                       <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                       <button type="button" class="btn btn-danger btn-xs action-button"><span class="glyphicon glyphicon-remove"></span></button>
                      </a>
                      <a href="#" data-toggle="modal" data-target="#add_sale{{$stock->st_id}}">
-                        <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                        <button type="button" class="btn btn-warning btn-xs action-button"><span class="glyphicon glyphicon-shopping-cart"></span></button>
                       </a>
                    </td>
                 </tr>
