@@ -61,11 +61,11 @@
                   @endif
                   <?php
                     $todayDate = time();
-                    $date_6_months = strtotime("+6 months");
+                    $date_6_months = strtotime("+4 months");
                     $givenDate = strtotime($stock->expiry_date);
                   ?>
                   @if($givenDate > $todayDate && $givenDate < $date_6_months)
-                    <td style="color:green">{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
+                    <td style="color:green"><b>{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</b></td>
                   @elseif($givenDate < $todayDate)
                     <td style="color:orange">{{ date('Y-m-d', strtotime($stock->expiry_date)) }}</td>
                   @else
