@@ -124,7 +124,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="submit" form="addSaleStock{{$stock->st_id}}" class="btn btn-info" onclick="return confirm('Are you sure about your input?');">Create</button>
+                          <button type="submit" form="addSaleStock{{$stock->st_id}}" class="btn btn-info" onclick="return confirm('Are you sure about your input?');">Submit</button>
                         </div>
                       </form>
                     </div>
