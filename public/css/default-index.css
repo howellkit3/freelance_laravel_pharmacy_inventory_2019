@@ -183,3 +183,18 @@ a.article, a.article:hover {
 .action-button {
   margin-bottom: 2px;
 }
+
+.filter-by-date {
+  width: 100%;
+}
+
+.filter-row-date {
+  margin: 20px 10px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.total-row {
+  border-style: none !important;
+}

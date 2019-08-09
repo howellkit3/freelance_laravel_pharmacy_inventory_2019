@@ -129,19 +129,36 @@ class StockQuantities extends Model
 			return $stockNum;
 		}
 
-		public static function getSoldDates(){
-			$StockQuantityDetails = DB::table('stock_quantities')
-					->orderBy('stock_quantities.id', 'desc')
-					->select('stocks.*'
-										,'stock_quantities.*'
-										,'stock_quantities.id as st_id'
-										,'stocks.id as stocks_id'
-										,'stock_infos.*')
-					->leftjoin('stocks', 'stocks.id', '=', 'stock_quantities.stock_id')
-					->leftjoin('stock_infos', 'stock_infos.stock_quantities_id', '=', 'stock_quantities.from_qty_id')
-					->where('stock_quantities.type', 0)
-					->where('stock_quantities.status', 1)
-					->paginate(50);
+		public static function getSoldDates($input_dates = null){
+
+			if(!empty($input_dates)) {
+				$StockQuantityDetails = DB::table('stock_quantities')
+						->orderBy('stock_quantities.id', 'desc')
+						->select('stocks.*'
+											,'stock_quantities.*'
+											,'stock_quantities.id as st_id'
+											,'stocks.id as stocks_id'
+											,'stock_infos.*')
+						->leftjoin('stocks', 'stocks.id', '=', 'stock_quantities.stock_id')
+						->leftjoin('stock_infos', 'stock_infos.stock_quantities_id', '=', 'stock_quantities.from_qty_id')
+						->where('stock_quantities.type', 0)
+						->where('stock_quantities.status', 1)
+						->whereBetween('stock_quantities.date_sold', [$input_dates['date_from'], $input_dates['date_to']])
+						->paginate(500);
+			} else {
+				$StockQuantityDetails = DB::table('stock_quantities')
+						->orderBy('stock_quantities.id', 'desc')
+						->select('stocks.*'
+											,'stock_quantities.*'
+											,'stock_quantities.id as st_id'
+											,'stocks.id as stocks_id'
+											,'stock_infos.*')
+						->leftjoin('stocks', 'stocks.id', '=', 'stock_quantities.stock_id')
+						->leftjoin('stock_infos', 'stock_infos.stock_quantities_id', '=', 'stock_quantities.from_qty_id')
+						->where('stock_quantities.type', 0)
+						->where('stock_quantities.status', 1)
+						->paginate(50);
+			}
 
 			foreach ($StockQuantityDetails as $key => $value) {
 				$stockNum = self::generateStockNum($value);
@@ -310,6 +327,32 @@ class StockQuantities extends Model
 		public function updateStock($stock_details, $id)
 		{
 			SELF::where('id','=', $id)->update($stock_details);
+			return 1;
+		}
+
+		public function getStockSold($stock_quantity_id)
+		{
+			$origin_quantity = DB::table('stock_quantities')
+					->select('from_qty_id', 'quantity')
+					->where('id', $stock_quantity_id)
+					->where('type', 0)
+					->first();
+
+			$sold_quantity = $origin_quantity->quantity;
+
+			$selected_quantity = DB::table('stock_quantities')
+					->where('id', $origin_quantity->from_qty_id)
+					->where('type', 1)
+					->where('from_qty_id', null)
+					->first();
+
+			$quantity_sold['status'] = 0;
+			SELF::where('id','=', $stock_quantity_id)->update($quantity_sold);
+
+			$quantity_void['status'] = 1;
+			$quantity_void['quantity'] = $sold_quantity + $selected_quantity->quantity;
+			SELF::where('id','=', $origin_quantity->from_qty_id)->update($quantity_void);
+
 			return 1;
 		}
 }

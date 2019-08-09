@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Models\StockQuantities;
 use App\Http\Models\Stocks;
@@ -50,6 +51,9 @@ class DailySalesController extends Controller
 
     public function showReportPage()
     {
+      Session::put('date_from', null);
+      Session::put('date_to', null);
+
       $Stocks = new Stocks;
       $StockQuantities = new StockQuantities;
       $stockList = $Stocks->getStocksAll();
@@ -67,5 +71,58 @@ class DailySalesController extends Controller
       $genericList = $Generics->getAllGenerics();
 
       return view('pages.daily_sales.sales_report',compact('dailySalesList','categories','brands','stockList','brandList', 'genericList'));
+    }
+
+    public function voidStock(Request $request)
+    {
+      if($request->has('_token')) {
+        $request->validate([
+          'quantity_stock_id' => 'required',
+        ]);
+
+        $daily_sales_form = $request->all();
+
+        $StockQuantities = new StockQuantities;
+        $isSuccess = $StockQuantities->getStockSold($daily_sales_form['quantity_stock_id']);
+
+        if($isSuccess) {
+          return redirect()->route('sales_report')->with('success','The Quantity has been voided!');
+        } else {
+          return redirect()->route('sales_report')->with('error','Something went wrong');
+        }
+      }
+    }
+
+    public function filterSaleByDate(Request $request)
+    {
+      if($request->has('_token')) {
+        $request->validate([
+          'date_from' => 'required',
+          'date_to' => 'required',
+        ]);
+
+        $input_dates = $request->all();
+
+        Session::put('date_from', $input_dates['date_from']);
+        Session::put('date_to', $input_dates['date_to']);
+
+        $Stocks = new Stocks;
+        $StockQuantities = new StockQuantities;
+        $stockList = $Stocks->getStocksAll();
+        $stockList = $StockQuantities->insertStockQuantity($stockList);
+        $brands = $Stocks->getBrandList();
+        $categories = $Stocks->getCategoryList();
+
+        $dailySalesList = $StockQuantities->getSoldDates($input_dates);
+        $dailySalesList = $StockQuantities->computeProfit($dailySalesList);
+
+        $Brands = new Brands;
+        $brandList = $Brands->getAllBrands();
+
+        $Generics = new Generics;
+        $genericList = $Generics->getAllGenerics();
+
+        return view('pages.daily_sales.sales_report',compact('dailySalesList','categories','brands','stockList','brandList', 'genericList'));
+      }
     }
 }
