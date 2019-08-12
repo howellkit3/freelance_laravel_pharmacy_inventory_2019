@@ -105,7 +105,7 @@ class StockQuantitiesController extends Controller
 
         if(!empty($hasQuantity)) {
           $dailySalesList = $StockQuantities->addQuantityToStock($stock_quantity_details_to_add);
-          return redirect()->route('sales_report')->with('success','Stock Quantity has been updated successfully!');
+          return redirect()->route('stock_search')->with('success','Stock Quantity has been updated successfully!');
         }else{
           return redirect()->route('sales_report')->with('error','There is no Stock for the Item');
         }
