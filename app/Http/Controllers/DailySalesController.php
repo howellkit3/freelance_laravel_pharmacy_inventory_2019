@@ -56,6 +56,7 @@ class DailySalesController extends Controller
 
       $Stocks = new Stocks;
       $StockQuantities = new StockQuantities;
+      $StockQuantities->addValueToStockQuantitiesID();
       $stockList = $Stocks->getStocksAll();
       $stockList = $StockQuantities->insertStockQuantity($stockList);
       $brands = $Stocks->getBrandList();

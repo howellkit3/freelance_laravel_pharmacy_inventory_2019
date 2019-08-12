@@ -98,7 +98,7 @@
                <td>{{ date('Y-m-d', strtotime($dailySales->date_sold)) }}</td>
                <td>{{ $dailySales->newStockNum }}</td>
                <td>{{ ucfirst($brandList[$dailySales->brand_id]) }}</td>
-               <td>{{ ucfirst($genericList[$dailySales->category_id]) }}</td>
+               <td>{{ ucfirst($genericList[$dailySales->generic_id]) }}</td>
                <td>{{ $dailySales->size }}</td>
                <td>{{ date('Y-m-d', strtotime($dailySales->expiry_date)) }}</td>
                <td>{{ $dailySales->quantity }}</td>
